@@ -25,6 +25,15 @@ dependencies {
 
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:30.0-jre'
+
+    // jsoup HTML parser library @ https://jsoup.org/
+    implementation 'org.jsoup:jsoup:1.14.2'
+
+    // Jile
+    // implementation 'lib/jile.common.jar'
+    // implementation 'lib/jile.vis.jar'
+    // implementation 'lib/jile.lingu.jar'
+    implementation fileTree('lib') { include '*.jar' }
 }
 
 application {
