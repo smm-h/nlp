@@ -1,3 +1,6 @@
+# ignore compiled java .class files
+app/bin/**/*.class
+
 # Ignore Gradle project-specific cache directory
 .gradle
 

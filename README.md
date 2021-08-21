@@ -1,4 +1,4 @@
-# Jilic Natural Language Processing
+# NLP by SMMH
 
 ## Outline
 
@@ -26,25 +26,25 @@
 
 ## Hierarchical goals
 
-- Guess language :robot:
+- Guess language
 - Analysis
-  - normalize :robot:
-  - tokenize :robot:
-  - stopword removal :robot:
-  - split sentences :robot:
-    - informal vs. formal :robot:
-    - spellcheck and correction :robot:
-    - stemming and lemmatization :robot:
+  - normalize
+  - tokenize
+  - stopword removal
+  - split sentences
+    - informal vs. formal
+    - spellcheck and correction
+    - stemming and lemmatization
 - Process/understanding
   - Contextual nuances [[w](https://en.wikipedia.org/wiki/Pragmatics)]
   - Rate words to gain insight
-    - By importance, to find _key_-words :robot:
-    - By sentiment, to accomplish sentiment analysis :robot:
-    - By relavance, to find topics :robot:
+    - By importance, to find _key_-words
+    - By sentiment, to accomplish sentiment analysis
+    - By relavance, to find topics
       - Categorize and organize the documents
-      - Generate a word-cloud :robot:
-  - Extract entities :robot:
-  - :ocean:
+      - Generate a word-cloud
+  - Extract entities
+  - **innovations**
     - extract and store relations betweens words
     - deduce relations as statements and questions
     - deduce the lemmas of inflected words
@@ -54,12 +54,13 @@
     - compress
       - delete less important ideas
       - delete repeated or similar ideas
-      - summarize :robot:
+      - summarize
 - Synthesis
   - Orthography [[w](https://en.wikipedia.org/wiki/Orthography)]
 
-## Document assessment
+## String analysis
 
+- one-liner? (no line-breaks)
 - human readable (ratio of textual symbols to length)
 - well-broken (ratio of line-breaks to length)
 - patternless (not CSV, TSV, or SSV)
