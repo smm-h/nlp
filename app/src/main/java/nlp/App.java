@@ -1,7 +1,10 @@
 package nlp;
 
+import web.wikipedia.*;
+
 public class App {
     public static void main(String[] args) throws Exception {
-        new RandomArticle().get();
+        Article article = new RandomArticleGenerator().generate();
+        article.getContents();
     }
 }

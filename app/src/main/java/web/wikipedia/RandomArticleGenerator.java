@@ -1,4 +1,4 @@
-package nlp;
+package web.wikipedia;
 
 import java.io.IOException;
 
@@ -7,30 +7,35 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class RandomArticle {
+public class RandomArticleGenerator implements ArticleGenerator {
     private final String url;
 
-    public RandomArticle(String url) {
+    public RandomArticleGenerator(String url) {
         this.url = url;
     }
 
-    public RandomArticle() {
-        this.url = "https://simple.wikipedia.org/wiki/Special:Random";
+    public RandomArticleGenerator() {
+        this("https://simple.wikipedia.org/wiki/Special:Random");
     }
 
-    public String get() throws IOException {
+    @Override
+    public Article generate() throws IOException {
         Document document = Jsoup.connect(url).followRedirects(true).timeout(60000).get();
-        System.out.println(document.baseUri());
+        String source = document.baseUri();
+        System.out.println(source);
         Elements all = document.body().getElementById("content").getAllElements();
+        String p = null;
         for (Element element : all) {
             // if (isText(element)) {
             if (element.tagName().equals("p")) {
                 System.out.println("");
-                System.out.println(element.tagName());
+                // System.out.println(element.tagName());
                 System.out.println(element.text());
+                p = element.text();
+                break;
             }
         }
-        return null;
+        return new Article(source, p);
     }
 
     private boolean isText(Element element) {
@@ -39,6 +44,6 @@ public class RandomArticle {
     }
 
     public static void main(String[] args) throws Exception {
-        new RandomArticle().get();
+        new RandomArticleGenerator().generate();
     }
 }
