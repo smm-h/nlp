@@ -1,0 +1,21 @@
+# Qualities of Text
+
+- one-liner? (no line-breaks)
+- human readable (ratio of textual symbols to length)
+- well-broken (ratio of line-breaks to length)
+- patternless (not CSV, TSV, or SSV)
+- [plain](#plain-ness) (not JSON, Markdown, or XML)
+  - XML tags
+    - HTML tags
+  - Markdown tags
+    - Markdown headers
+    - Markdown tables
+    - Markdown emojis
+    - Inline LaTeX
+- well-distributed (unicode clusters)
+- well-spaced (ratio of whitespace to length)
+- well-separated (ratio of single spaces to length)
+- well-structured (ratio of openers to closers)
+- well-punctuated (ratio of punctuation to length)
+- well-normalized (ratio of non-normal characters to length)
+- well-articulated (clusters of repeated non-whitespace characters)

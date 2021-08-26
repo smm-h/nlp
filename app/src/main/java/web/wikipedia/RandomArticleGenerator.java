@@ -10,9 +10,14 @@ import org.jsoup.select.Elements;
 import jile.common.LinkedTree;
 import jile.common.MutableTree;
 import jile.vis.Viewer;
+import nl.NaturalLanguage;
 
 public class RandomArticleGenerator implements ArticleGenerator {
     private final String url;
+
+    public RandomArticleGenerator(NaturalLanguage nl) {
+        this.url = nl.RANDOM_WIKIPEDIA_ARTICLE_URL;
+    }
 
     public RandomArticleGenerator(String url) {
         this.url = url;
@@ -41,14 +46,17 @@ public class RandomArticleGenerator implements ArticleGenerator {
     private void populate(MutableTree<String> tree, Elements elements) {
         for (Element e : elements) {
             String tag = e.tagName();
+
+            // headers
             if (tag.charAt(0) == 'h') {
                 String s = Element_to_String(e);
-                if (s.length() > 4) {
-                    tree.addAndGoTo(s);
-                    populate(tree, e.children());
-                    tree.goBack();
-                }
-            } else if (tag.equals("p")) {
+                tree.addAndGoTo(s);
+                populate(tree, e.children());
+                tree.goBack();
+            }
+
+            // paragraphs
+            else if (tag.equals("p")) {
                 String s = Element_to_String(e);
                 if (s.length() > 4) {
                     System.out.println("");
@@ -56,7 +64,10 @@ public class RandomArticleGenerator implements ArticleGenerator {
                     System.out.println(e.text());
                     tree.add(s);
                 }
-            } else {
+            }
+
+            // other elements that may contain paragraphs and headers
+            else {
                 populate(tree, e.children());
             }
         }
