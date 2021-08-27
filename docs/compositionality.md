@@ -6,9 +6,9 @@
 
 ## Defiants
 
-- in context (vs. in isolation)
-- idiomatic expressions
-- quotations
+- [contextuality](context.md)
+- [idioms](idiom.md)
+- [quotations](quot.txt)
 - logical metonymies
 
 Logical metonymies like "John began the book", where "to begin" subcategorizes an event as its argument, but "the book" is found instead.

@@ -1,5 +1,9 @@
 # Grapheme
 
+> A word, once dissected, no longer signifies anything, is nothing. Like a body that, after an autopsy, is less than a corpse.
+>
+> $-$ Emil Cioran [[w](https://en.wikipedia.org/wiki/Emil_Cioran)]
+
 - unit of writing
 - lexically distinctive
 - corresponds with a phoneme, syllable, or morpheme
