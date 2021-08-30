@@ -1,6 +1,9 @@
 # Linguistics
 
-- Speech
-- Writing
-- Morphology (inflection and derivation)
-- Semantics (the meaning of composition of words into complex structures) "meaning into"
+- The Signifier
+  - Speech
+  - Writing
+  - Morphology (inflection and derivation)
+- The Signified
+  - Semantics (contextless)
+  - [Pragmatics](context.md#pragmatics) (contextful)

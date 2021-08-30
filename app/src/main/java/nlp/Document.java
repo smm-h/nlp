@@ -1,15 +1,7 @@
 package nlp;
 
-import jile.common.LinkedTree;
+import java.util.List;
 
-public class Document {
-    private final LinkedTree<Element> tree;
+public interface Document extends List<DocumentElement>, Text {
 
-    public Document(LinkedTree<Element> tree) {
-        this.tree = new LinkedTree<Element>();
-    }
-
-    private class Element {
-        private final 
-    }
 }

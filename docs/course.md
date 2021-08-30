@@ -1,0 +1,43 @@
+# Course
+
+- [x] measures
+  - [x] tf
+  - [x] df
+  - [x] tf-idf
+- [ ] tokenizer
+  - [ ] methods
+    - [x] space-split
+    - [ ] DFA
+  - shortcomings
+    - half-space
+    - two-part verbs
+  - [ ] multi-language
+  - [ ] normalization
+- [ ] stemming
+  - [ ] lematization
+  - [ ] db of tokens
+  - [ ] problematic examples
+    - [ ] بیمارستان
+    - [ ] رستم دستان
+- [ ] stop-word accumulation
+  - [ ] methods
+    - [ ] high TF and high DF
+    - [ ] statistical db
+- [ ] spell-checking
+  - [ ] db of tokens
+  - [ ] auto-derivation from roots
+  - [ ] searchable token-tree structure
+  - [ ] minimum edit distance
+- [ ] syntax analysis
+  - [ ] n-gram (bi, tri, quad, and uni)
+  - [ ] count and probability tables
+  - [ ] smoothing
+  - [ ] count star
+- [ ] part-of-speechs
+  - [ ] rule-based
+  - [ ] tagged db
+  - [ ] n-gram and tagging
+  - [ ] markov chain, model, and hmm
+- [ ] visualization
+  - [ ] tables (tf-idf, count, probability)
+  - [ ] graphs (dfa, mm, hmm)
