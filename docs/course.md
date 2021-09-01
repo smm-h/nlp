@@ -1,17 +1,20 @@
 # Course
 
+- [ ] visualization
+  - [x] tables (tf-idf, count, probability)
+  - [ ] graphs (dfa, mm, hmm)
 - [x] measures
   - [x] tf
   - [x] df
   - [x] tf-idf
-- [ ] tokenizer
-  - [ ] methods
+- [x] tokenizer
+  - [x] methods
     - [x] space-split
-    - [ ] DFA
+    - [x] DFA
   - shortcomings
     - half-space
     - two-part verbs
-  - [ ] multi-language
+  - [x] multi-language
   - [ ] normalization
 - [ ] stemming
   - [ ] lematization
@@ -38,6 +41,3 @@
   - [ ] tagged db
   - [ ] n-gram and tagging
   - [ ] markov chain, model, and hmm
-- [ ] visualization
-  - [ ] tables (tf-idf, count, probability)
-  - [ ] graphs (dfa, mm, hmm)

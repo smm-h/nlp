@@ -4,7 +4,11 @@ import java.util.LinkedList;
 
 public class LinkedDocument extends LinkedList<DocumentElement> implements Document {
 
+    private static int indexCounter = 0;
+    private int index;
+
     public LinkedDocument(DocumentElement... elements) {
+        index = ++indexCounter;
         for (DocumentElement element : elements) {
             add(element);
         }
@@ -86,6 +90,21 @@ public class LinkedDocument extends LinkedList<DocumentElement> implements Docum
             }
         }
         return tf;
+    }
+
+    @Override
+    public String toString() {
+        return "D" + index;
+    }
+
+    @Override
+    public int hashCode() {
+        return index << 10;
+    }
+
+    @Override
+    public int compareTo(Document o) {
+        return Integer.compare(hashCode(), o.hashCode());
     }
 
 }

@@ -1,5 +1,7 @@
 package nlp;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 public interface Corpus extends Set<Document>, Text {
@@ -22,9 +24,11 @@ public interface Corpus extends Set<Document>, Text {
         for (Token token : getVocabulary()) {
             Term term = token.asTerm();
             double df = getDocumentFrequency(term);
+            Map<Document, Double> r = new HashMap<Document, Double>();
+            m.put(token, r);
             for (Document document : this) {
                 double tfidf = (df == 0) ? 0 : (document.getTermFrequency(term) / df);
-                System.out.println(tfidf);
+                r.put(document, tfidf);
             }
         }
         return m;

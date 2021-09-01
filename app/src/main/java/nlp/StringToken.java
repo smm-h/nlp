@@ -32,7 +32,7 @@ public class StringToken implements Token {
 
     @Override
     public String toString() {
-        return contents;
+        return "'" + contents + "'";
     }
 
 }

@@ -28,7 +28,10 @@ dependencies {
 
     // jsoup HTML parser library @ https://jsoup.org/
     implementation 'org.jsoup:jsoup:1.14.2'
-
+    
+    // CSSBox
+    // implementation 'net.sf.cssbox:cssbox'
+    // implementation 'net.sf.cssbox:swingbox'
     // Jile
     // implementation 'lib/jile.common.jar'
     // implementation 'lib/jile.vis.jar'

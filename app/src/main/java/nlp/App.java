@@ -2,6 +2,8 @@ package nlp;
 
 import nl.NaturalLanguage;
 import nl.languages.Farsi;
+import vis.InFrame;
+import web.HTMLView;
 import web.wikipedia.ArticleGenerator;
 import web.wikipedia.RandomArticleGenerator;
 
@@ -24,7 +26,7 @@ public class App {
                 Document d2 = charsAsTokens("acacaacc");
                 Document d3 = charsAsTokens("addebad");
                 Corpus corpus = new HashCorpus(d1, d2, d3);
-                corpus.getTFIDF();
+                InFrame.show(new HTMLView(HTMLView.toTable(corpus.getTFIDF())));
                 break;
         }
     }
