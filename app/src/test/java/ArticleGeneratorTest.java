@@ -15,7 +15,6 @@ public class ArticleGeneratorTest {
         try {
             r.generate();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         // article.getContents();

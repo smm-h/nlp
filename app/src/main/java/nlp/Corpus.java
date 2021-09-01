@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public interface Corpus extends Set<Document>, Text {
+public interface Corpus extends Set<Document>, Textual {
 
     /**
      * @return The number of {@link Document}s that contain a given term, in this

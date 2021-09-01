@@ -2,7 +2,7 @@ package nlp;
 
 import java.util.List;
 
-public interface Paragraph extends DocumentElement, Text, List<Token> {
+public interface Paragraph extends DocumentElement, Textual, List<Token> {
     @Override
     public default String toHTML() {
         return "<p>" + toPlainText() + "</p>";

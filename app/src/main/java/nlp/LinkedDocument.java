@@ -21,8 +21,8 @@ public class LinkedDocument extends LinkedList<DocumentElement> implements Docum
         for (DocumentElement element : this) {
 
             // if any is textual,
-            if (element instanceof Text) {
-                Text text = (Text) element;
+            if (element instanceof Textual) {
+                Textual text = (Textual) element;
 
                 // delegate containment check to it
                 if (text.contains(term))
@@ -42,8 +42,8 @@ public class LinkedDocument extends LinkedList<DocumentElement> implements Docum
         for (DocumentElement element : this) {
 
             // if any is textual,
-            if (element instanceof Text) {
-                Text text = (Text) element;
+            if (element instanceof Textual) {
+                Textual text = (Textual) element;
 
                 // delegate size count to it
                 size += text.sizeNonUnique();
@@ -62,8 +62,8 @@ public class LinkedDocument extends LinkedList<DocumentElement> implements Docum
         for (DocumentElement element : this) {
 
             // if any is textual,
-            if (element instanceof Text) {
-                Text text = (Text) element;
+            if (element instanceof Textual) {
+                Textual text = (Textual) element;
 
                 // union my vocabulary with its
                 v.addAll(text.getVocabulary());
@@ -82,8 +82,8 @@ public class LinkedDocument extends LinkedList<DocumentElement> implements Docum
         for (DocumentElement element : this) {
 
             // if any is textual,
-            if (element instanceof Text) {
-                Text text = (Text) element;
+            if (element instanceof Textual) {
+                Textual text = (Textual) element;
 
                 // delegate term-frequency to it
                 tf += text.getTermFrequency(term);

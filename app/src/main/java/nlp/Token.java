@@ -1,7 +1,7 @@
 package nlp;
 
 /**
- * A meaningful part of {@link Text}.
+ * A meaningful part of {@link Textual}.
  */
 public interface Token {
 

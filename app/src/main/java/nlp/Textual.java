@@ -3,7 +3,7 @@ package nlp;
 /**
  * Anything that contains text, but is not necessarily sequential.
  */
-public interface Text {
+public interface Textual {
 
     public boolean contains(Term term);
 
