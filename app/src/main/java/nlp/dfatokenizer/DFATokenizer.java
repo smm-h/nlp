@@ -3,11 +3,11 @@ package nlp.dfatokenizer;
 import java.util.LinkedList;
 import java.util.List;
 
-import automata.dfa.AmbiguousSymbolException;
 import automata.dfa.DFA;
 import automata.dfa.UnknownSymbolException;
-import nlp.Tokenizer;
+import automata.dfa.AmbiguousSymbolException;
 import nlp.Token;
+import nlp.Tokenizer;
 
 public class DFATokenizer extends DFA<Character> implements Tokenizer {
 
@@ -25,20 +25,25 @@ public class DFATokenizer extends DFA<Character> implements Tokenizer {
                 char symbol = c[i];
                 s = process(s, symbol);
             } catch (UnknownSymbolException e) {
+                // System.out.println("Resetting.");
                 if (s.isFinal()) {
                     tokens.add(new TypedToken(string.substring(b, i), s));
+                } else {
+                    System.out.println("LOST: " + string.substring(b, i));
                 }
                 b = i;
                 s = s0;
             } catch (AmbiguousSymbolException e) {
-                System.out.println("Ambiguity encountered.");
+                // System.out.println("Ambiguity encountered.");
                 return null;
             }
-            // System.out.println("s = " + s + (s.isFinal() ? " (F)" : ""));
+            System.out.println(s);
             i++;
         }
         if (s.isFinal()) {
             tokens.add(new TypedToken(string.substring(b, i), s));
+        } else {
+            System.out.println("LOST: " + string.substring(b, i));
         }
         return tokens;
     }

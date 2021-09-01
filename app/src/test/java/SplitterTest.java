@@ -1,11 +1,12 @@
-package nlp;
 
 import javax.swing.*;
 
+import nlp.Splitter;
+import nlp.Tokenizer;
 import vis.InFrame;
 import web.HTMLView;
 
-public class TokenizerTest {
+public class SplitterTest {
     public static void main(String[] args) {
 
         // do the tokenizing

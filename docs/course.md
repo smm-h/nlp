@@ -1,43 +1,55 @@
 # Course
 
-- [ ] visualization
-  - [x] tables (tf-idf, count, probability)
-  - [ ] graphs (dfa, mm, hmm)
-- [x] measures
-  - [x] tf
-  - [x] df
-  - [x] tf-idf
-- [x] tokenizer
-  - [x] methods
-    - [x] space-split
-    - [x] DFA
-  - shortcomings
-    - half-space
-    - two-part verbs
-  - [x] multi-language
-  - [ ] normalization
-- [ ] stemming
-  - [ ] lematization
+- [ ] Visualizations
+  - [x] Tables
+    - TF-IDF
+    - Count and probability tables for n-gram
+  - [ ] Graphs
+    - DFA
+    - MM and HMM
+- [x] Concepts
+  - [x] [`Text`](../app/src/main/java/nlp/Text.java) (متن)
+  - [x] [`Token`](../app/src/main/java/nlp/Token.java)
+  - [x] [`Term`](../app/src/main/java/nlp/Term.java)
+  - [x] [`Paragraph`](../app/src/main/java/nlp/Paragraph.java)
+  - [x] [`Document`](../app/src/main/java/nlp/Document.java)
+    - [x] Article generation [[test](../app/src/test/java/ArticleGeneratorTest.java)]
+  - [x] [`Corpus`](../app/src/main/java/nlp/Corpus.java)
+  - [x] [`Vocabulary`](../app/src/main/java/nlp/Vocabulary.java)
+  - [x] [`Tokenizer`](../app/src/main/java/nlp/Tokenizer.java)
+- [x] Measures
+  - [x] TF
+  - [x] DF
+  - [x] TF-IDF [[test](../app/src/test/java/TFIDFTest.java)]
+- [x] Tokenization
+  - [x] Space-split [[test](../app/src/test/java/SplitterTest.java)]
+  - [x] DFA
+    - [[test I](../app/src/test/java/DFATokenizerTest.java)]
+    - [[test II](../app/src/test/java/DFATokenizerSmallTest.java)]
+- [ ] Normalization
+- [ ] Stop-word accumulation
+  - [ ] High TF and high DF
+  - [ ] Statistical dataset
+- [ ] Spell-checking and correction
   - [ ] db of tokens
-  - [ ] problematic examples
-    - [ ] بیمارستان
-    - [ ] رستم دستان
-- [ ] stop-word accumulation
-  - [ ] methods
-    - [ ] high TF and high DF
-    - [ ] statistical db
-- [ ] spell-checking
-  - [ ] db of tokens
-  - [ ] auto-derivation from roots
   - [ ] searchable token-tree structure
-  - [ ] minimum edit distance
-- [ ] syntax analysis
-  - [ ] n-gram (bi, tri, quad, and uni)
-  - [ ] count and probability tables
-  - [ ] smoothing
-  - [ ] count star
-- [ ] part-of-speechs
+  - [ ] Minimum Edit Distance
+- [ ] Auto-derivation from roots
+- [ ] Stemming
+  - Lematization [[doc](lemmatization-vs-stemming.md)]
+  - Problems
+    - بیمارستان
+    - رستم دستان
+    - Two-part verbs
+- [ ] Syntax analysis
+  - [ ] N-gram (bi, tri, quad, and uni)
+  - [ ] Count and probability tables
+  - [ ] Smoothing
+  - [ ] Count star
+- [ ] Parts-of-speech
   - [ ] rule-based
   - [ ] tagged db
   - [ ] n-gram and tagging
-  - [ ] markov chain, model, and hmm
+  - [ ] markov chain
+  - [ ] markov model
+  - [ ] hidden markov model

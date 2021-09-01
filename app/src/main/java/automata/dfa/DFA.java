@@ -44,7 +44,10 @@ public class DFA<T> {
     public State<T> process(State<T> s, T symbol) throws UnknownSymbolException, AmbiguousSymbolException {
         int routeCount;
         routeCount = 0;
+        // System.out.print("[ ");
         for (Transition<T> t : transitionsOf.get(s)) {
+            // System.out.print(t);
+            // System.out.print(" ");
             if (t.checkCondition(symbol)) {
                 routeCount++;
                 if (routeCount > 1) {
@@ -54,6 +57,7 @@ public class DFA<T> {
                 }
             }
         }
+        // System.out.print("]\n");
         if (routeCount == 0) {
             throw new UnknownSymbolException(s, symbol);
         }
@@ -75,6 +79,8 @@ public class DFA<T> {
     public Transition<T> getTransition(State<T> from, State<T> to) {
         int h = hashTransition(from, to);
         if (transitions.containsKey(h)) {
+            // System.out.println("you asked for " + from + " to " + to);
+            // System.out.println("i give you " + transitions.get(h));
             return transitions.get(h);
         } else {
             Transition<T> t = new BasicTransition(from, to);
@@ -93,6 +99,8 @@ public class DFA<T> {
         public boolean isFinal();
 
         public void setName(String name);
+
+        public String getName();
 
         public Transition<T> getTransitionTo(State<T> destination);
     }
@@ -158,6 +166,11 @@ public class DFA<T> {
         }
 
         @Override
+        public String getName() {
+            return name;
+        }
+
+        @Override
         public String toString() {
             return name;
         }
@@ -202,9 +215,14 @@ public class DFA<T> {
         public int hashCode() {
             return hashTransition(src, dst);
         }
+
+        @Override
+        public String toString() {
+            return "(" + src.toString() + " -> " + dst.toString() + ")";
+        }
     }
 
     private static <T> int hashTransition(State<T> src, State<T> dst) {
-        return src.hashCode() << 10 + dst.hashCode();
+        return src.hashCode() * 100003 + dst.hashCode();
     }
 }
