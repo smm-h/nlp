@@ -8,7 +8,7 @@
     - DFA
     - MM and HMM
 - [x] Concepts
-  - [x] [`Textual`](../app/src/main/java/nlp/Textual.java) (متن)
+  - [x] [`Textual`](../app/src/main/java/nlp/Textual.java) (متنی)
   - [x] [`Token`](../app/src/main/java/nlp/Token.java)
   - [x] [`Term`](../app/src/main/java/nlp/Term.java)
   - [x] [`Paragraph`](../app/src/main/java/nlp/Paragraph.java)

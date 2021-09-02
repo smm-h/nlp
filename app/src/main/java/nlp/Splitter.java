@@ -1,8 +1,6 @@
 package nlp;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -34,10 +32,10 @@ public class Splitter implements Tokenizer {
     }
 
     @Override
-    public List<Token> tokenize(String string) {
+    public Tokenized tokenize(String string) {
 
         // keep a list of tokenized tokens
-        List<Token> tokens = new ArrayList<Token>();
+        ArrayTokenized tokens = new ArrayTokenized();
 
         // keep track of two flags for the start and end of token
         int backward = 0;
@@ -66,6 +64,8 @@ public class Splitter implements Tokenizer {
 
         // add the last token
         tokens.add(new StringToken(string.substring(backward)));
+
+        System.out.println(tokens);
 
         // return the list of tokens
         return tokens;

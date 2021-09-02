@@ -1,11 +1,12 @@
 
-import nlp.ArrayParagraph;
+import nlp.TokenizedParagraph;
+import nlp.ArrayTokenized;
 import nlp.Corpus;
 import nlp.Document;
 import nlp.HashCorpus;
 import nlp.LinkedDocument;
 import vis.InFrame;
-import web.HTMLView;
+import web.html.HTMLView;
 
 public class TFIDFTest {
     public static void main(String[] args) {
@@ -22,6 +23,6 @@ public class TFIDFTest {
         for (char c : s.toCharArray()) {
             a[i++] = Character.toString(c);
         }
-        return new LinkedDocument(new ArrayParagraph(a));
+        return new LinkedDocument(new TokenizedParagraph(new ArrayTokenized(a)));
     }
 }

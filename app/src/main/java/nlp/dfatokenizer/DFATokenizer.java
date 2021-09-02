@@ -1,19 +1,18 @@
 package nlp.dfatokenizer;
 
-import java.util.LinkedList;
-import java.util.List;
 
 import automata.dfa.DFA;
 import automata.dfa.UnknownSymbolException;
 import automata.dfa.AmbiguousSymbolException;
-import nlp.Token;
+import nlp.ArrayTokenized;
+import nlp.Tokenized;
 import nlp.Tokenizer;
 
 public class DFATokenizer extends DFA<Character> implements Tokenizer {
 
     @Override
-    public List<Token> tokenize(String string) {
-        List<Token> tokens = new LinkedList<Token>();
+    public Tokenized tokenize(String string) {
+        ArrayTokenized tokens = new ArrayTokenized();
         char[] c = string.toCharArray();
         int b = 0;
         int i = 0;

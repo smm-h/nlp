@@ -2,6 +2,8 @@ package web.wikipedia;
 
 import java.io.IOException;
 
+import web.html.HTMLDocument;
+
 public interface ArticleGenerator {
-    public Article generate() throws IOException;
+    public HTMLDocument generate() throws IOException;
 }

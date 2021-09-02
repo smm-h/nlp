@@ -4,7 +4,7 @@ import javax.swing.*;
 import nlp.Splitter;
 import nlp.Tokenizer;
 import vis.InFrame;
-import web.HTMLView;
+import web.html.HTMLView;
 
 public class SplitterTest {
     public static void main(String[] args) {

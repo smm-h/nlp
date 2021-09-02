@@ -31,6 +31,11 @@ public class StringToken implements Token {
     }
 
     @Override
+    public String asString() {
+        return contents;
+    }
+
+    @Override
     public String toString() {
         return "'" + contents + "'";
     }
