@@ -4,12 +4,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-public class HashTFIDF extends HashMap<Token, Map<Textual, Double>> implements TFIDF {
+public class HashCorpusMeasure extends HashMap<Token, Map<Textual, Double>> implements CorpusMeasure {
 
     private final Corpus corpus;
     private double[] sorted;
 
-    public HashTFIDF(Corpus corpus) {
+    public HashCorpusMeasure(Corpus corpus) {
         this.corpus = corpus;
     }
 
@@ -28,7 +28,7 @@ public class HashTFIDF extends HashMap<Token, Map<Textual, Double>> implements T
                 sorted[i++] = rowMap.get(corpus);
             }
             Arrays.sort(sorted);
-            System.out.println("Range: " + sorted[0] + "~" + sorted[sorted.length - 1]);
+            // System.out.println("Range: " + sorted[0] + "~" + sorted[sorted.length - 1]);
         }
         return sorted;
     }

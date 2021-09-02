@@ -11,7 +11,7 @@ import nlp.Corpus;
 import nlp.Document;
 import nlp.HashCorpus;
 import nlp.Splitter;
-import nlp.TFIDF;
+import nlp.CorpusMeasure;
 import nlp.Textual;
 import nlp.TokenizedHeading;
 import web.html.HTMLDocument;
@@ -22,18 +22,18 @@ import web.html.HTMLUtilities.ToString;
 import web.wikipedia.DocumentGenerator;
 import web.wikipedia.RandomDocumentGenerator;
 
+@SuppressWarnings("unused")
 public class CorpusGeneratorTest {
     public static void main(String[] args) {
 
         // HTMLDocumentElement.DEFAULT_TOKENIZER = DFATokenizerBigTest.getTokenizer();
         HTMLDocumentElement.DEFAULT_TOKENIZER = new Splitter(" .,;'\"()[]،؛!?؟");
 
-        NaturalLanguage farsi = new Farsi();
-
-        Corpus corpus = generateCorpus(farsi, 5);
+        Corpus corpus = generateCorpus(new RandomDocumentGenerator(), 15); // new Farsi()
 
         HTMLDocument report = new HTMLDocument();
 
+        report.add(HTMLUtilities.DEFAULT_STYLE);
         report.add(new TokenizedHeading(new ArrayTokenized("Report"), 1));
 
         ToString<Document> documentToString = new ToString<Document>() {
@@ -50,7 +50,8 @@ public class CorpusGeneratorTest {
         report.add(new TokenizedHeading(new ArrayTokenized("Articles used in the corpus"), 2));
         report.add(HTMLUtilities.toList(corpus, false, documentToString));
 
-        TFIDF tfidf = corpus.getTFIDF();
+        CorpusMeasure tfidf = corpus.getTFIDF();
+        CorpusMeasure tfdf = corpus.getTFDF();
 
         ToString<Double> doubleToString = new ToString<Double>() {
             @Override
@@ -59,17 +60,27 @@ public class CorpusGeneratorTest {
             }
         };
 
+        RowPredicate<Textual, Double> p1 = new RowPredicate<Textual, Double>() {
+            @Override
+            public boolean check(Map<Textual, Double> rowMap) {
+                return rowMap.get(corpus) > 1.0;
+            }
+        };
+
         report.add(new TokenizedHeading(new ArrayTokenized("TF-IDF"), 2));
-        report.add(HTMLUtilities.toTable("Token", tfidf, null, doubleToString)); // getPredicate(tfidf)
+        report.add(HTMLUtilities.toTable("Token", tfidf, getPredicate(tfidf), doubleToString)); // getPredicate(tfidf)
+
+        report.add(new TokenizedHeading(new ArrayTokenized("TF-DF"), 2));
+        report.add(HTMLUtilities.toTable("Token", tfdf, getPredicate(tfdf), doubleToString));
 
         HTMLUtilities.show(report);
     }
 
-    static RowPredicate<Textual, Double> getPredicate(TFIDF tfidf) {
+    static RowPredicate<Textual, Double> getPredicate(CorpusMeasure measure) {
 
-        Corpus corpus = tfidf.getCorpus();
+        Corpus corpus = measure.getCorpus();
 
-        double threshold = tfidf.getSorted()[tfidf.size() * 90 / 100];
+        double threshold = measure.getSorted()[measure.size() - 50];
 
         System.out.println("Threshold: " + threshold);
 
@@ -81,13 +92,12 @@ public class CorpusGeneratorTest {
         };
     }
 
-    static Corpus generateCorpus(NaturalLanguage nl, int count) {
+    static Corpus generateCorpus(DocumentGenerator generator, int count) {
         Corpus corpus = new HashCorpus();
-        DocumentGenerator r = new RandomDocumentGenerator(nl);
         int f = 0;
         for (int i = 0; i < count; i++) {
             try {
-                corpus.add(r.generate());
+                corpus.add(generator.generate());
             } catch (IOException e) {
                 i--;
                 System.err.println("Failed to load article");

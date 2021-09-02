@@ -19,21 +19,43 @@ public interface Corpus extends Set<Document>, Textual {
         return df;
     }
 
-    public default TFIDF getTFIDF() {
-        TFIDF m = new HashTFIDF(this);
+    public default CorpusMeasure getTFIDF() {
+        CorpusMeasure measure = new HashCorpusMeasure(this);
         for (Token token : getVocabulary()) {
             Term term = token.asTerm();
             double df = getDocumentFrequency(term);
             Map<Textual, Double> r = new HashMap<Textual, Double>();
-            m.put(token, r);
+            measure.put(token, r);
             double total = 0;
+            double count = 0;
             for (Document document : this) {
                 double tfidf = (df == 0) ? 0 : (document.getTermFrequency(term) / df);
                 total += tfidf;
+                count++;
                 r.put(document, tfidf);
             }
-            r.put(this, total);
+            r.put(this, total / count);
         }
-        return m;
+        return measure;
+    }
+
+    public default CorpusMeasure getTFDF() {
+        CorpusMeasure measure = new HashCorpusMeasure(this);
+        for (Token token : getVocabulary()) {
+            Term term = token.asTerm();
+            double df = getDocumentFrequency(term);
+            Map<Textual, Double> r = new HashMap<Textual, Double>();
+            measure.put(token, r);
+            double total = 0;
+            double count = 0;
+            for (Document document : this) {
+                double tfdf = document.getTermFrequency(term) * df;
+                total += tfdf;
+                count++;
+                r.put(document, tfdf);
+            }
+            r.put(this, total / count);
+        }
+        return measure;
     }
 }

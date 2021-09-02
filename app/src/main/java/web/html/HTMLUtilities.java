@@ -13,6 +13,12 @@ import java.awt.Desktop;
 
 public class HTMLUtilities {
 
+    public static final DocumentElement DEFAULT_STYLE = new HTMLOnlyDocumentElement(
+            "<link rel=\"stylesheet\" href=\"C:\\Android\\sdk\\docs\\assets\\css\\default.css\">");
+
+    // "<link
+    // rel=\"stylesheet\"href=\"C:\\Gradle\\gradle-7.0\\docs\\dsl\\base.css\">""
+
     public static boolean show(HTMLDocument d) {
         Resource r = Resource.of(d.toHTML(), "html");
         try {
@@ -96,7 +102,7 @@ public class HTMLUtilities {
 
         // gather an ordered set of all available columns
         Set<C> columns = new TreeSet<C>();
-        System.out.println("SIZE: " + map.size());
+        // System.out.println("SIZE: " + map.size());
         for (R row : map.keySet()) {
             for (C column : map.get(row).keySet()) {
                 columns.add(column);

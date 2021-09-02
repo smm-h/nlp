@@ -1,42 +1,28 @@
-# JNLP
+# Index
 
-- Guess language
-- Analysis
-  - normalize
-  - tokenize
-  - stopword removal
-  - split sentences
-    - informal vs. formal
-    - spellcheck and correction
-    - stemming and lemmatization
-- Process/understanding
-  - [Contextual nuances](docs/context.md)
-  - disambiguify words and map them to their senses [[w](https://en.wikipedia.org/wiki/Word-sense_disambiguation)]
-  - anaphora resolution [[w](https://en.wikipedia.org/wiki/Anaphora_(linguistics))]
-  - determine coherence [[w](https://en.wikipedia.org/wiki/Coherence_(linguistics))]
-  - Rate words to gain insight
-    - By importance, to find _key_-words
-    - By sentiment, to accomplish sentiment analysis
-    - By relavance, to find topics
-      - Categorize and organize the documents
-      - Generate a word-cloud
-      - relevance of search engines
-  - Extract entities
-  - **innovations**
-    - extract and store relations betweens words
-    - deduce relations as statements and questions
-    - deduce the lemmas of inflected words
-  - stretch/compress
-    - stretch
-      - reword the same ideas
-    - compress
-      - delete less important ideas
-      - delete repeated or similar ideas
-      - summarize
-  - inference [[w](https://en.wikipedia.org/wiki/Inference)]
-    - deduction
-    - induction
-    - abduction
-- Synthesis
-  - Orthography [[w](https://en.wikipedia.org/wiki/Orthography)]
-  - generate discourse
+- [course](docs/course.md)
+- [main](docs/main.md)
+- [goals](docs/goals.md)
+- [nl](docs/nl.md)
+- [nlp](docs/nlp.md)
+- [farsi](docs/farsi.md)
+- [outline](docs/outline.md)
+- [linguistics](docs/linguistics.md)
+- [compositionality](docs/compositionality.md)
+- [context](docs/context.md)
+- [denotation-and-connotation](docs/denotation-and-connotation.md)
+- [lemmatization-vs-stemming](docs/lemmatization-vs-stemming.md)
+- [umlaut](docs/umlaut.md)
+- [assimilation](docs/assimilation.md)
+- [coarticulation](docs/coarticulation.md)
+- [emics-and-etics](docs/emics-and-etics.md)
+- [figures-of-speech](docs/figures-of-speech.md)
+- [idiom](docs/idiom.md)
+- [grapheme](docs/grapheme.md)
+- [lexeme](docs/lexeme.md)
+- [truth](docs/truth.md)
+- [meaning](docs/meaning.md)
+- [morphology](docs/morphology.md)
+- [qualities-of-text](docs/qualities-of-text.md)
+- [semantics-vs-pragmatics](docs/semantics-vs-pragmatics.md)
+- [synchronic-vs-diachronic](docs/synchronic-vs-diachronic.md)

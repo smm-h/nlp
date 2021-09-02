@@ -2,8 +2,8 @@
 
 - [ ] Visualizations
   - [x] Tables
-    - TF-IDF
-    - Count and probability tables for n-gram
+    - $TF-IDF$
+    - Count and probability tables for $n$-gram
   - [ ] Graphs
     - DFA
     - MM and HMM
@@ -14,23 +14,24 @@
   - [x] [`Paragraph`](../app/src/main/java/nlp/Paragraph.java)
   - [x] [`Document`](../app/src/main/java/nlp/Document.java)
     - [x] Document generation [[test](../app/src/test/java/DocumentGeneratorTest.java)]
-    - [x] Corpus generation [[test](../app/src/test/java/CorpusGeneratorTest.java)]
   - [x] [`Corpus`](../app/src/main/java/nlp/Corpus.java)
   - [x] [`Vocabulary`](../app/src/main/java/nlp/Vocabulary.java)
   - [x] [`Tokenizer`](../app/src/main/java/nlp/Tokenizer.java)
 - [x] Measures
-  - [x] TF
-  - [x] DF
-  - [x] TF-IDF [[test](../app/src/test/java/TFIDFTest.java)]
+  - [x] $TF$
+  - [x] $DF$
+  - [x] $TF-DF$
+  - [x] $TF-IDF$ [[test](../app/src/test/java/TFIDFTest.java)]
 - [x] Tokenization
   - [x] Space-split [[test](../app/src/test/java/SplitterTest.java)]
   - [x] DFA
     - [[test I](../app/src/test/java/DFATokenizerTest.java)]
     - [[test II](../app/src/test/java/DFATokenizerSmallTest.java)]
-- [ ] Normalization
 - [ ] Stop-word accumulation
-  - [ ] High TF and high DF
+  - [x] Corpus generation [[test](../app/src/test/java/CorpusGeneratorTest.java)]
+  - [x] High TF and high DF
   - [ ] Statistical dataset
+- [ ] Normalization
 - [ ] Spell-checking and correction
   - [ ] db of tokens
   - [ ] searchable token-tree structure
@@ -43,14 +44,14 @@
     - رستم دستان
     - Two-part verbs
 - [ ] Syntax analysis
-  - [ ] N-gram (bi, tri, quad, and uni)
+  - [ ] $n$-gram (bi, tri, quad, and uni)
   - [ ] Count and probability tables
   - [ ] Smoothing
   - [ ] Count star
 - [ ] Parts-of-speech
   - [ ] rule-based
   - [ ] tagged db
-  - [ ] n-gram and tagging
-  - [ ] markov chain
-  - [ ] markov model
-  - [ ] hidden markov model
+  - [ ] $n$-gram and tagging
+  - [ ] Markov chain
+  - [ ] Markov model
+  - [ ] Hidden Markov model

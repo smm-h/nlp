@@ -30,7 +30,7 @@ public interface Textual extends Comparable<Textual> {
     public int getTermFrequency(Term term);
 
     @Override
-    public default int compareTo(Textual o) {
-        return Integer.compare(hashCode(), o.hashCode());
+    public default int compareTo(Textual other) {
+        return Integer.compare(hashCode(), other.hashCode());
     }
 }
