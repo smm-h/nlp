@@ -25,8 +25,8 @@ public class LinkedDocument extends LinkedList<DocumentElement> implements Docum
     }
 
     @Override
-    public int compareTo(Document o) {
-        return Integer.compare(hashCode(), o.hashCode());
+    public String getSource() {
+        return "N/A";
     }
 
 }

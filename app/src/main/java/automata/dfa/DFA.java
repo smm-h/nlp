@@ -24,15 +24,19 @@ public class DFA<T> {
         for (int i = 0; i < input.length; i++) {
             routeCount = 0;
             T symbol = input[i];
-            for (Transition<T> t : transitionsOf.get(s)) {
-                if (t.checkCondition(symbol)) {
-                    routeCount++;
-                    if (routeCount > 1) {
-                        throw new AmbiguousSymbolException(s, symbol);
-                    } else {
-                        s = t.getDestination();
+            if (transitionsOf.containsKey(s)) {
+                for (Transition<T> t : transitionsOf.get(s)) {
+                    if (t.checkCondition(symbol)) {
+                        routeCount++;
+                        if (routeCount > 1) {
+                            throw new AmbiguousSymbolException(s, symbol);
+                        } else {
+                            s = t.getDestination();
+                        }
                     }
                 }
+            } else {
+                throw new UnknownSymbolException(s, symbol);
             }
             if (routeCount == 0) {
                 throw new UnknownSymbolException(s, symbol);
@@ -45,17 +49,21 @@ public class DFA<T> {
         int routeCount;
         routeCount = 0;
         // System.out.print("[ ");
-        for (Transition<T> t : transitionsOf.get(s)) {
-            // System.out.print(t);
-            // System.out.print(" ");
-            if (t.checkCondition(symbol)) {
-                routeCount++;
-                if (routeCount > 1) {
-                    throw new AmbiguousSymbolException(s, symbol);
-                } else {
-                    s = t.getDestination();
+        if (transitionsOf.containsKey(s)) {
+            for (Transition<T> t : transitionsOf.get(s)) {
+                // System.out.print(t);
+                // System.out.print(" ");
+                if (t.checkCondition(symbol)) {
+                    routeCount++;
+                    if (routeCount > 1) {
+                        throw new AmbiguousSymbolException(s, symbol);
+                    } else {
+                        s = t.getDestination();
+                    }
                 }
             }
+        } else {
+            throw new UnknownSymbolException(s, symbol);
         }
         // System.out.print("]\n");
         if (routeCount == 0) {

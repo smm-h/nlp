@@ -3,7 +3,7 @@ package nlp;
 /**
  * Anything that contains text, but is not necessarily sequential.
  */
-public interface Textual {
+public interface Textual extends Comparable<Textual> {
 
     public boolean contains(Term term);
 
@@ -28,4 +28,9 @@ public interface Textual {
      * @return The number of {@link Document}s that contain a given term.
      */
     public int getTermFrequency(Term term);
+
+    @Override
+    public default int compareTo(Textual o) {
+        return Integer.compare(hashCode(), o.hashCode());
+    }
 }

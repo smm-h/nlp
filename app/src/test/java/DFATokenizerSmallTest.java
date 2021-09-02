@@ -1,8 +1,13 @@
+import nlp.Tokenizer;
 
 public class DFATokenizerSmallTest {
 
     public static void main(String[] args) {
-        new DFATokenizerTest(5) {
+        System.out.println(getTokenizer().tokenize("aabaa"));
+    }
+
+    public static Tokenizer getTokenizer() {
+        DFATokenizerTest t = new DFATokenizerTest(5) {
             @Override
             public void test() {
 
@@ -20,9 +25,9 @@ public class DFATokenizerSmallTest {
                 go(4, 4, 'd');
                 go(4, 5, 'c');
                 go(5, 5, 'a');
-
-                System.out.println(t.tokenize("aabaa"));
             }
-        }.test();
+        };
+        t.test();
+        return t.t;
     }
 }

@@ -14,7 +14,7 @@ import nlp.TokenizedParagraph;
 
 public abstract class HTMLDocumentElement implements DocumentElement {
 
-    private static Tokenizer DEFAULT_TOKENIZER;
+    public static Tokenizer DEFAULT_TOKENIZER;
     private static Set<String> SUPPORTED_TAGS;
 
     static {
@@ -72,7 +72,7 @@ public abstract class HTMLDocumentElement implements DocumentElement {
             case "h6":
                 return new TokenizedHeading(tokenized, 6);
             default:
-                System.out.println("Unsupported tag: " + tag);
+                System.err.println("Unsupported tag: " + tag);
                 return null;
         }
     }

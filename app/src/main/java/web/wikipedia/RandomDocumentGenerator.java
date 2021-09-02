@@ -5,18 +5,18 @@ import java.io.IOException;
 import nl.NaturalLanguage;
 import web.html.HTMLDocument;
 
-public class RandomArticleGenerator implements ArticleGenerator {
+public class RandomDocumentGenerator implements DocumentGenerator {
     private final String url;
 
-    public RandomArticleGenerator(NaturalLanguage nl) {
+    public RandomDocumentGenerator(NaturalLanguage nl) {
         this.url = nl.RANDOM_WIKIPEDIA_ARTICLE_URL;
     }
 
-    public RandomArticleGenerator(String url) {
+    public RandomDocumentGenerator(String url) {
         this.url = url;
     }
 
-    public RandomArticleGenerator() {
+    public RandomDocumentGenerator() {
         this("https://simple.wikipedia.org/wiki/Special:Random");
     }
 
@@ -26,6 +26,6 @@ public class RandomArticleGenerator implements ArticleGenerator {
     }
 
     public static void main(String[] args) throws Exception {
-        new RandomArticleGenerator().generate();
+        new RandomDocumentGenerator().generate();
     }
 }

@@ -20,16 +20,19 @@ public interface Corpus extends Set<Document>, Textual {
     }
 
     public default TFIDF getTFIDF() {
-        TFIDF m = new TFIDF();
+        TFIDF m = new HashTFIDF(this);
         for (Token token : getVocabulary()) {
             Term term = token.asTerm();
             double df = getDocumentFrequency(term);
-            Map<Document, Double> r = new HashMap<Document, Double>();
+            Map<Textual, Double> r = new HashMap<Textual, Double>();
             m.put(token, r);
+            double total = 0;
             for (Document document : this) {
                 double tfidf = (df == 0) ? 0 : (document.getTermFrequency(term) / df);
+                total += tfidf;
                 r.put(document, tfidf);
             }
+            r.put(this, total);
         }
         return m;
     }

@@ -1,7 +1,10 @@
 package nlp;
 
-import java.util.HashMap;
 import java.util.Map;
 
-public class TFIDF extends HashMap<Token, Map<Document, Double>> {
+public interface TFIDF extends Map<Token, Map<Textual, Double>> {
+
+    public Corpus getCorpus();
+
+    public double[] getSorted();
 }

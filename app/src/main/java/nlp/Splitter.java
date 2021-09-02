@@ -65,8 +65,6 @@ public class Splitter implements Tokenizer {
         // add the last token
         tokens.add(new StringToken(string.substring(backward)));
 
-        System.out.println(tokens);
-
         // return the list of tokens
         return tokens;
     }

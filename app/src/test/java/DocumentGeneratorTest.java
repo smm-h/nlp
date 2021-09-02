@@ -5,14 +5,14 @@ import nl.NaturalLanguage;
 import nl.languages.Farsi;
 import vis.InFrame;
 import web.html.HTMLView;
-import web.wikipedia.ArticleGenerator;
-import web.wikipedia.RandomArticleGenerator;
+import web.wikipedia.DocumentGenerator;
+import web.wikipedia.RandomDocumentGenerator;
 
-public class ArticleGeneratorTest {
+public class DocumentGeneratorTest {
     public static void main(String[] args) {
 
         NaturalLanguage farsi = new Farsi();
-        ArticleGenerator r = new RandomArticleGenerator(farsi);
+        DocumentGenerator r = new RandomDocumentGenerator(farsi);
         try {
             InFrame.show(new HTMLView(r.generate().toHTML()));
 

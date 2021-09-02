@@ -13,11 +13,16 @@ public class HTMLDocument extends LinkedDocument {
 
     private final String source;
 
-    public HTMLDocument(String url) throws IOException {
-        this.source = url;
+    public HTMLDocument(HTMLDocumentElement... elements) {
+        source = null;
+        for (HTMLDocumentElement e : elements) {
+            add(e);
+        }
+    }
 
+    public HTMLDocument(String url) throws IOException {
         Document document = Jsoup.connect(url).followRedirects(true).timeout(60000).get();
-        String source = document.baseUri();
+        source = document.baseUri();
         System.out.println(source);
         Elements elements = document.body().getElementById("content").getAllElements();
         for (Element e : elements) {
@@ -27,6 +32,7 @@ public class HTMLDocument extends LinkedDocument {
         }
     }
 
+    @Override
     public String getSource() {
         return source;
     }

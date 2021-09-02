@@ -6,6 +6,7 @@ import nlp.Document;
 import nlp.HashCorpus;
 import nlp.LinkedDocument;
 import vis.InFrame;
+import web.html.HTMLUtilities;
 import web.html.HTMLView;
 
 public class TFIDFTest {
@@ -14,7 +15,7 @@ public class TFIDFTest {
         Document d2 = charsAsTokens("acacaacc");
         Document d3 = charsAsTokens("addebad");
         Corpus corpus = new HashCorpus(d1, d2, d3);
-        InFrame.show(new HTMLView(HTMLView.toTable(corpus.getTFIDF())));
+        InFrame.show(new HTMLView(HTMLUtilities.toTable(corpus.getTFIDF()).toHTML()));
     }
 
     private static Document charsAsTokens(String s) {

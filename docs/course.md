@@ -13,7 +13,8 @@
   - [x] [`Term`](../app/src/main/java/nlp/Term.java)
   - [x] [`Paragraph`](../app/src/main/java/nlp/Paragraph.java)
   - [x] [`Document`](../app/src/main/java/nlp/Document.java)
-    - [x] Article generation [[test](../app/src/test/java/ArticleGeneratorTest.java)]
+    - [x] Document generation [[test](../app/src/test/java/DocumentGeneratorTest.java)]
+    - [x] Corpus generation [[test](../app/src/test/java/CorpusGeneratorTest.java)]
   - [x] [`Corpus`](../app/src/main/java/nlp/Corpus.java)
   - [x] [`Vocabulary`](../app/src/main/java/nlp/Vocabulary.java)
   - [x] [`Tokenizer`](../app/src/main/java/nlp/Tokenizer.java)

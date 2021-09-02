@@ -1,12 +1,14 @@
 package nlp;
 
+import java.util.Objects;
+
 public class TokenizedHeading implements Heading {
 
     private final Tokenized tokenized;
     private final int level;
 
     public TokenizedHeading(Tokenized tokenized, int level) {
-        this.tokenized = tokenized;
+        this.tokenized = Objects.requireNonNull(tokenized);
         this.level = level;
     }
 

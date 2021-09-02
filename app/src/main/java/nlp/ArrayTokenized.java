@@ -7,14 +7,11 @@ import java.util.Map;
 public class ArrayTokenized extends ArrayList<Token> implements Tokenized {
 
     private final Map<Term, Boolean> containsCache = new HashMap<Term, Boolean>();
-    private final Vocabulary v;
+    private Vocabulary v;
 
     public ArrayTokenized(String... strings) {
-        v = new HashVocabulary();
         for (String s : strings) {
-            Token t = new StringToken(s);
-            add(t);
-            v.add(t);
+            add(new StringToken(s));
         }
     }
 
@@ -45,6 +42,12 @@ public class ArrayTokenized extends ArrayList<Token> implements Tokenized {
 
     @Override
     public Vocabulary getVocabulary() {
+        if (v == null) {
+            v = new HashVocabulary();
+            for (Token t : this) {
+                v.add(t);
+            }
+        }
         return v;
     }
 

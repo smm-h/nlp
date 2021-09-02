@@ -68,4 +68,9 @@ public class HashCorpus extends HashSet<Document> implements Corpus {
         return tf;
     }
 
+    @Override
+    public String toString() {
+        return "CORPUS";
+    }
+
 }

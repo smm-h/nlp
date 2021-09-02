@@ -2,11 +2,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 import automata.dfa.DFA.ConfigurableTransition.Condition;
+import nlp.Tokenizer;
 
 public class DFATokenizerBigTest {
 
     public static void main(String[] args) {
-        new DFATokenizerTest(13) {
+        System.out.println(getTokenizer().tokenize("hello world"));
+    }
+
+    public static Tokenizer getTokenizer() {
+        DFATokenizerTest t = new DFATokenizerTest(13) {
             @Override
             public void test() {
                 setStart(1);
@@ -40,7 +45,7 @@ public class DFATokenizerBigTest {
                 go(1, 2, digit);
                 go(2, 2, digit);
                 go(2, 3, period);
-                go(1, 3, period);
+                // go(1, 3, period); // causes ambiguity
                 go(3, 4, digit);
                 go(4, 4, digit);
                 go(4, 8, period);
@@ -58,8 +63,9 @@ public class DFATokenizerBigTest {
                 go(1, 7, letter);
                 go(7, 7, (Character c) -> letter.check(c) || c == ',');
 
-                System.out.println(t.tokenize("hello world"));
             }
-        }.test();
+        };
+        t.test();
+        return t.t;
     }
 }

@@ -4,6 +4,6 @@ import java.io.IOException;
 
 import web.html.HTMLDocument;
 
-public interface ArticleGenerator {
+public interface DocumentGenerator {
     public HTMLDocument generate() throws IOException;
 }

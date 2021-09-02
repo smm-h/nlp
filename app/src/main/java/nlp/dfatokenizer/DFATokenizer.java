@@ -1,6 +1,5 @@
 package nlp.dfatokenizer;
 
-
 import automata.dfa.DFA;
 import automata.dfa.UnknownSymbolException;
 import automata.dfa.AmbiguousSymbolException;
@@ -33,10 +32,10 @@ public class DFATokenizer extends DFA<Character> implements Tokenizer {
                 b = i;
                 s = s0;
             } catch (AmbiguousSymbolException e) {
-                // System.out.println("Ambiguity encountered.");
+                System.out.println("Ambiguity encountered: <" + Character.toString(c[i]) + "> at: " + s);
                 return null;
             }
-            System.out.println(s);
+            // System.out.println(s);
             i++;
         }
         if (s.isFinal()) {

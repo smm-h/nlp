@@ -1,11 +1,13 @@
 package nlp;
 
+import java.util.Objects;
+
 public class TokenizedParagraph implements Paragraph {
 
     private final Tokenized tokenized;
 
     public TokenizedParagraph(Tokenized tokenized) {
-        this.tokenized = tokenized;
+        this.tokenized = Objects.requireNonNull(tokenized);
     }
 
     @Override
