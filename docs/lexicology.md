@@ -1,15 +1,6 @@
 # Lexicology
 
-analyzes the lexicon of a language
-
-A word is the smallest meaningful unit of a language that can stand on its own, and is made up of small components called morphemes
-
-- features of words
-  - formation
-  - spelling
-  - origin
-  - usage
-  - definition
-  - relationships with other words
-- how words can be broken down
-- identifies common patterns they follow
+- the study of [words](words.md)
+- and how they make up the [lexicon](lexicon.md) of a language
+- could break down words into [morphemes](morpheme.md)
+- could relate a given word to other words in a phrase

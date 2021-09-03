@@ -11,21 +11,29 @@
   - [Farsi](docs/farsi.md)
   - [Synchronic versus Diachronic](docs/synchronic-vs-diachronic.md)
   - [Prescriptive versus Descriptive](docs/prescriptive-vs-descriptive-linguistics.md)
+  - [Analytic versus Synthetic](docs/analytic-vs-synthetic-languages.md)
   - [Multi-language](docs/multi-language.md)
 - Processing
-  - [Lexeme](docs/lexeme.md)
+  - [Lexemes](docs/lexeme.md)
   - [Emics and Etics](docs/emics-and-etics.md)
   - [Qualities of Text](docs/qualities-of-text.md)
 - The Signifier
   - Writing
-    - [Grapheme](docs/grapheme.md)
+    - [Graphemes](docs/grapheme.md)
+    - [Writing](docs/writing.md)
+    - [Orthography](docs/orthography.md)
   - Speech
     - [Assimilation](docs/assimilation.md)
     - [Umlaut](docs/umlaut.md)
     - [Coarticulation](docs/coarticulation.md)
-  - Morphology (inflection and derivation)
-    - [Morphology](docs/morphology.md)
+  - Morphology
+    - [Inflection versus Derivation](docs/inflection-vs-derivation.md)
+    - [Morphemes](docs/morpheme.md)
+    - [Bound versus Free morphemes](docs/bound-vs-free-morphemes.md)
+    - [Affixation](docs/affixation.md)
     - [Lemmatization versus Stemming](docs/lemmatization-vs-stemming.md)
+    - [Compound words](docs/compound-words.md)
+    - [Word formation processes](docs/word-formation-processes.md)
 - The Signified
   - Semantics (contextless)
     - [Semantics versus Pragmatics](docs/semantics-vs-pragmatics.md)
@@ -40,21 +48,46 @@
 
 ## Uncategorized
 
-- [Affixation](docs/affixation.md)
-- [Analytic-Vs-Synthetic-Languages](docs/analytic-vs-synthetic-languages.md)
-- [Bound-Vs-Free-Morphemes](docs/bound-vs-free-morphemes.md)
-- [Compound-Words](docs/compound-words.md)
-- [Content-Versus-Function-Words](docs/content-versus-function-words.md)
 - [Evolution](docs/evolution.md)
-- [Inflection-Vs-Derivation](docs/inflection-vs-derivation.md)
-- [Lexicology](docs/lexicology.md)
-- [Lexicon](docs/lexicon.md)
-- [Multi-Language](docs/multi-language.md)
-- [Nls](docs/nls.md)
-- [Orthography](docs/orthography.md)
-- [Prescriptive-Vs-Descriptive-Linguistics](docs/prescriptive-vs-descriptive-linguistics.md)
+- [NLS](docs/nls.md)
+- [Universal Grammar](docs/universal-grammar.md)
 - [Processes](docs/processes.md)
-- [Universal-Grammar](docs/universal-grammar.md)
+- [Content versus Function words](docs/content-versus-function-words.md)
+- [Lexicon](docs/lexicon.md)
+- [Lexicology](docs/lexicology.md)
 - [Variation](docs/variation.md)
-- [Word-Formation-Processes](docs/word-formation-processes.md)
-- [Writing](docs/writing.md)
+- [The Alphabetic Principle](docs/alphabetic-principle.md)
+- [Collocation](docs/collocation.md)
+- [Corpora](docs/corpora.md)
+- [Grammaticalization](docs/grammaticalization.md)
+- [Hapax Legomenon](docs/hapax-legomenon.md)
+- [Lexical item](docs/lexical-item.md)
+- [Lexical versus Auxiliary verbs](docs/lexical-vs-aux-verbs.md)
+- [Morpheme](docs/morpheme.md)
+- [Root words](docs/root.md)
+- [Spelling versus Pronunciation](docs/spelling-vs-pronunciation.md)
+- [Syllable](docs/syllable.md)
+- [Words](docs/words.md)
+
+## Headings for a language
+
+- Language name
+- Diachronic
+  - History
+  - Distribution
+  - Dialects
+  - Literature
+- Synchronic
+  - Graphemes
+  - Phonemes
+    - Vowels
+    - Consonants
+    - Prosody
+  - Morphemes
+  - Grammar
+    - Verb
+    - Nouns
+    - Word order
+  - Deixis
+    - Temporal
+    - Spatial
