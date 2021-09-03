@@ -2,7 +2,9 @@ package nlp;
 
 import java.util.Objects;
 
-public class TokenizedParagraph implements Paragraph {
+import util.Secretly;
+
+public class TokenizedParagraph implements Paragraph, Secretly<Tokenized> {
 
     private final Tokenized tokenized;
 
@@ -35,4 +37,8 @@ public class TokenizedParagraph implements Paragraph {
         return tokenized.getTermFrequency(term);
     }
 
+    @Override
+    public Tokenized getSecretSide() {
+        return tokenized;
+    }
 }

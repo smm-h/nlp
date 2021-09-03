@@ -1,6 +1,6 @@
 package nlp;
 
-public interface Token {
+public interface Token extends Comparable<Token> {
 
     public Term asTerm();
 
@@ -9,4 +9,8 @@ public interface Token {
      */
     public String asString();
 
+    @Override
+    public default int compareTo(Token other) {
+        return Integer.compare(hashCode(), other.hashCode());
+    }
 }

@@ -29,7 +29,7 @@ public class CorpusGeneratorTest {
         // HTMLDocumentElement.DEFAULT_TOKENIZER = DFATokenizerBigTest.getTokenizer();
         HTMLDocumentElement.DEFAULT_TOKENIZER = new Splitter(" .,;'\"()[]،؛!?؟");
 
-        Corpus corpus = generateCorpus(new RandomDocumentGenerator(), 15); // new Farsi()
+        Corpus corpus = generateCorpus(new RandomDocumentGenerator(), 50); // new Farsi()
 
         HTMLDocument report = new HTMLDocument();
 
@@ -99,13 +99,13 @@ public class CorpusGeneratorTest {
             try {
                 corpus.add(generator.generate());
             } catch (IOException e) {
-                i--;
                 System.err.println("Failed to load article");
                 f++;
                 if (f > 3 && i == 0) {
                     System.err.println("Failed more than 3 times");
                     return null;
                 }
+                i--;
             }
         }
         return corpus;

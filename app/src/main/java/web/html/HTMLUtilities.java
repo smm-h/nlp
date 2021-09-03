@@ -102,12 +102,14 @@ public class HTMLUtilities {
 
         // gather an ordered set of all available columns
         Set<C> columns = new TreeSet<C>();
-        // System.out.println("SIZE: " + map.size());
         for (R row : map.keySet()) {
             for (C column : map.get(row).keySet()) {
                 columns.add(column);
             }
         }
+
+        // gather an ordered set of all rows
+        Set<R> rows = new TreeSet<R>(map.keySet());
 
         // make a string builder to accumulate HTML contents
         StringBuilder b = new StringBuilder();
@@ -133,7 +135,7 @@ public class HTMLUtilities {
         b.append("</tr>\n");
 
         // iterate over rows
-        for (R row : map.keySet()) {
+        for (R row : rows) {
 
             // get the row map
             Map<C, D> rowMap = map.get(row);

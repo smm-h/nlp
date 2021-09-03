@@ -2,7 +2,9 @@ package nlp;
 
 import java.util.Objects;
 
-public class TokenizedHeading implements Heading {
+import util.Secretly;
+
+public class TokenizedHeading implements Heading, Secretly<Tokenized> {
 
     private final Tokenized tokenized;
     private final int level;
@@ -40,6 +42,11 @@ public class TokenizedHeading implements Heading {
     @Override
     public int getTermFrequency(Term term) {
         return tokenized.getTermFrequency(term);
+    }
+
+    @Override
+    public Tokenized getSecretSide() {
+        return tokenized;
     }
 
 }

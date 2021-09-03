@@ -13,7 +13,7 @@
   - [x] [`Term`](../app/src/main/java/nlp/Term.java)
   - [x] [`Paragraph`](../app/src/main/java/nlp/Paragraph.java)
   - [x] [`Document`](../app/src/main/java/nlp/Document.java)
-    - [x] Document generation [[test](../app/src/test/java/DocumentGeneratorTest.java)]
+    - [x] Document generation [[test](../app/src/test/java/DocumentGeneratorTest.java)] :ballot_box_with_check:
   - [x] [`Corpus`](../app/src/main/java/nlp/Corpus.java)
   - [x] [`Vocabulary`](../app/src/main/java/nlp/Vocabulary.java)
   - [x] [`Tokenizer`](../app/src/main/java/nlp/Tokenizer.java)
@@ -21,31 +21,26 @@
   - [x] $TF$
   - [x] $DF$
   - [x] $TF-DF$
-  - [x] $TF-IDF$ [[test](../app/src/test/java/TFIDFTest.java)]
+  - [x] $TF-IDF$ [[test](../app/src/test/java/TFIDFTest.java)] :ballot_box_with_check:
 - [x] Tokenization
   - [x] Space-split [[test](../app/src/test/java/SplitterTest.java)]
-  - [x] DFA
-    - [[test I](../app/src/test/java/DFATokenizerTest.java)]
-    - [[test II](../app/src/test/java/DFATokenizerSmallTest.java)]
-- [ ] Stop-word accumulation
-  - [x] Corpus generation [[test](../app/src/test/java/CorpusGeneratorTest.java)]
-  - [x] High TF and high DF
-  - [ ] Statistical dataset
-- [ ] Normalization
+  - [x] DFA [[test I](../app/src/test/java/DFATokenizerTest.java), [test II](../app/src/test/java/DFATokenizerSmallTest.java)] :ballot_box_with_check:
+- [x] Stop-word accumulation
+  - [x] High TF and high DF [[test](../app/src/test/java/CorpusGeneratorTest.java)] :ballot_box_with_check:
+- [ ] Normalization :negative_squared_cross_mark:
 - [ ] Spell-checking and correction
   - [ ] db of tokens
   - [ ] searchable token-tree structure
-  - [ ] Minimum Edit Distance
+  - [ ] Minimum Edit Distance :negative_squared_cross_mark:
 - [ ] Auto-derivation from roots
-- [ ] Stemming
-  - Lematization [[doc](lemmatization-vs-stemming.md)]
+- [ ] [Stemming and Lematization](lemmatization-vs-stemming.md) :negative_squared_cross_mark:
   - Problems
     - بیمارستان
     - رستم دستان
-    - Two-part verbs
+    - Phrasal verbs
 - [ ] Syntax analysis
-  - [ ] $n$-gram (bi, tri, quad, and uni)
-  - [ ] Count and probability tables
+  - [x] $n$-gram (bi, tri, quad, and uni) [[test I](../app/src/test/java/BigramTest.java)] :ballot_box_with_check:
+  - [x] Count and probability tables
   - [ ] Smoothing
   - [ ] Count star
 - [ ] Parts-of-speech
@@ -53,5 +48,5 @@
   - [ ] tagged db
   - [ ] $n$-gram and tagging
   - [ ] Markov chain
-  - [ ] Markov model
+  - [ ] Markov model :negative_squared_cross_mark:
   - [ ] Hidden Markov model
