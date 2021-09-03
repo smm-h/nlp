@@ -8,4 +8,10 @@ public class LinkedTerm extends LinkedList<Token> implements Term {
             add(t);
         }
     }
+
+    public LinkedTerm(Iterable<Token> tokens) {
+        for (Token t : tokens) {
+            add(t);
+        }
+    }
 }

@@ -8,9 +8,9 @@ import web.html.HTMLUtilities;
 
 public class TFIDFTest {
     public static void main(String[] args) {
-        Document d1 = DocumentUtilities.charsAsTokens("abcabc");
-        Document d2 = DocumentUtilities.charsAsTokens("acacaacc");
-        Document d3 = DocumentUtilities.charsAsTokens("addebad");
+        Document d1 = DocumentUtilities.getDocumentFromCharsAsTokens("abcabc");
+        Document d2 = DocumentUtilities.getDocumentFromCharsAsTokens("acacaacc");
+        Document d3 = DocumentUtilities.getDocumentFromCharsAsTokens("addebad");
         Corpus corpus = new HashCorpus(d1, d2, d3);
 
         HTMLDocument report = new HTMLDocument();

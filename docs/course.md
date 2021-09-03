@@ -39,7 +39,11 @@
     - رستم دستان
     - Phrasal verbs
 - [ ] Syntax analysis
-  - [x] $n$-gram (bi, tri, quad, and uni) [[test I](../app/src/test/java/BigramTest.java)] :ballot_box_with_check:
+  - [x] $n$-gram :ballot_box_with_check:
+    - [x] Bigram [[test](../app/src/test/java/BigramTest.java)]
+    - [ ] Trigram
+    - [ ] Quadgram
+    - [ ] Unigram
   - [x] Count and probability tables
   - [ ] Smoothing
   - [ ] Count star
