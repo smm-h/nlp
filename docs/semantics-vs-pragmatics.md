@@ -1,7 +1,7 @@
 # Semantics versus Pragmatics
 
 - **pragmatics**: the study of how [context](context.md) contributes to meaning
-- **semantics**: the study of meaning encoded lexically or grammatically
+- **semantics**: the study of meaning encoded lexically or grammatically, via concept and/or reference
 
 ## Pragmatics
 

@@ -1,14 +1,5 @@
 # NL
 
-children, with UG already in them, adopt syntactic rules that conform to it as they grow and develop.
-
-rules must be definite, coherent, non-technical, cumulative and heuristic
-
-as the rules accumulate, an axiomatic system is formed between the two languages that enables a speaker of the first to learn the second
-
-prescriptive linguistics: a lossy attempt to formalize an informal language
-descriptive linguistics: to study the subjective elements lost during formalization
-
 a word := how it is spelled, how it is pronounced
 
 "to pronounce" := to generate an array of phonemes from a given array of graphemes
@@ -39,16 +30,31 @@ semantics
 
 orthography – written form
 phonology – spoken form
-semantics – concept, reference, meaning
 register – appropriacy of use or register
 collocation – lexical neighbours
 word associations
-syntax – grammatical function
-morphology – word parts
 
 syllable = c + v + c = onset + nucleus + coda
 
-- proto-writing: ideas are encoded in ideographs, words are avoided, it is impossible to reconstruct the original meaning
-- writing := utterance is encoded in syllables so that another reader can reconstruct the utterance
-- ideograph := a graphic symbol that represents an idea or concept, independent of any particular language, and specific words or phrases. Some ideograms are comprehensible only by familiarity with prior convention
-- pictograph := an ideograph that conveys its meaning through its pictorial resemblance to a physical object
+---
+
+- Language name
+- Diachronic
+  - History
+  - Distribution
+  - Dialects
+  - Literature
+- Synchronic
+  - Graphemes
+  - Phonemes
+    - Vowels
+    - Consonants
+    - Prosody
+  - Morphemes
+  - Grammar
+    - Verb
+    - Nouns
+    - Word order
+  - Deixis
+    - Temporal
+    - Spatial
