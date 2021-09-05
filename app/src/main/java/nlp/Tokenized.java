@@ -4,6 +4,10 @@ import java.util.List;
 
 public interface Tokenized extends List<Token>, Textual {
 
+    public default Token getSafe(int index) {
+        return Corpus.getSafe(this, index);
+    }
+
     public default String getContents() {
         StringBuilder builder = new StringBuilder();
         for (Token token : this) {

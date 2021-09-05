@@ -1,0 +1,17 @@
+
+import nlp.*;
+
+public class CombinationTest {
+    public static void main(String[] args) {
+        Vocabulary v = new HashVocabulary();
+
+        v.add(new StringToken("a"));
+        v.add(new StringToken("b"));
+        v.add(new StringToken("c"));
+        // v.add(new StringToken("d"));
+        Term[] a = Corpus.getAllCombinations(v, 3);
+        for (Term t : a) {
+            System.out.println(t);
+        }
+    }
+}
