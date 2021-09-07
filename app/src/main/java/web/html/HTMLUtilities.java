@@ -1,13 +1,13 @@
 package web.html;
 
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 
 import jile.common.Resource;
 import nlp.DocumentElement;
 import nlp.HTMLOnlyDocumentElement;
+import util.ToString;
 
 import java.awt.Desktop;
 
@@ -29,20 +29,9 @@ public class HTMLUtilities {
         }
     }
 
-    public interface ToString<T> {
-        public String alternativeToString(T t);
-    }
-
-    public static final ToString<Object> objectToString = new ToString<Object>() {
-        @Override
-        public String alternativeToString(Object object) {
-            return Objects.toString(object);
-        }
-    };
-
     @SuppressWarnings("unchecked")
     public static <T> DocumentElement toList(Iterable<T> iterable, boolean ordered) {
-        return toList(iterable, ordered, (ToString<T>) objectToString);
+        return toList(iterable, ordered, (ToString<T>) ToString.DEFAULT);
     }
 
     public static <T> DocumentElement toList(Iterable<T> iterable, boolean ordered, ToString<T> alt) {
@@ -79,7 +68,7 @@ public class HTMLUtilities {
 
     @SuppressWarnings("unchecked")
     public static <R, C, D> DocumentElement toTable(Map<R, Map<C, D>> map, RowPredicate<C, D> predicate) {
-        return toTable("", map, predicate, (ToString<D>) objectToString);
+        return toTable("", map, predicate, (ToString<D>) ToString.DEFAULT);
     }
 
     public static <R, C, D> DocumentElement toTable(Map<R, Map<C, D>> map, RowPredicate<C, D> predicate,
@@ -94,7 +83,7 @@ public class HTMLUtilities {
     @SuppressWarnings("unchecked")
     public static <R, C, D> DocumentElement toTable(String firstCell, Map<R, Map<C, D>> map,
             RowPredicate<C, D> predicate) {
-        return toTable(map, predicate, (ToString<D>) objectToString);
+        return toTable(map, predicate, (ToString<D>) ToString.DEFAULT);
     }
 
     public static <R, C, D> DocumentElement toTable(String firstCell, Map<R, Map<C, D>> map,

@@ -9,6 +9,12 @@ public class HTMLOnlyDocumentElement implements DocumentElement {
     }
 
     @Override
+    public String inspect(Inspector inspector) {
+        System.out.println("Could not inspect: " + html);
+        return html;
+    }
+
+    @Override
     public String toHTML() {
         return html;
     }

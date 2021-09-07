@@ -20,6 +20,11 @@ public class TokenizedHeading implements Heading, Secretly<Tokenized> {
     }
 
     @Override
+    public String inspect(Inspector inspector) {
+        return inspector.inspect(tokenized);
+    }
+
+    @Override
     public String toPlainText() {
         return tokenized.getContents();
     }

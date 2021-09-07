@@ -9,25 +9,36 @@ import nl.languages.Farsi;
 import nlp.ArrayTokenized;
 import nlp.Corpus;
 import nlp.Document;
+import nlp.Utilities;
+import util.ToString;
 import nlp.HashCorpus;
 import nlp.Splitter;
 import nlp.CorpusMeasure;
 import nlp.Textual;
 import nlp.TokenizedHeading;
 import web.html.HTMLDocument;
-import web.html.HTMLDocumentElement;
 import web.html.HTMLUtilities;
 import web.html.HTMLUtilities.RowPredicate;
-import web.html.HTMLUtilities.ToString;
 import web.wikipedia.DocumentGenerator;
 import web.wikipedia.RandomDocumentGenerator;
 
 @SuppressWarnings("unused")
 public class CorpusGeneratorTest {
+    static ToString<Document> DOCUMENT_TO_STRING = new ToString<Document>() {
+        @Override
+        public String alternativeToString(Document document) {
+            try {
+                return document.toString() + ": " + URLDecoder.decode(document.getSource(), "UTF-8");
+            } catch (UnsupportedEncodingException e) {
+                return document.toString() + ": " + document.getSource();
+            }
+        }
+    };
+
     public static void main(String[] args) {
 
         // HTMLDocumentElement.DEFAULT_TOKENIZER = DFATokenizerBigTest.getTokenizer();
-        HTMLDocumentElement.DEFAULT_TOKENIZER = new Splitter(" .,;'\"()[]،؛!?؟");
+        Utilities.DEFAULT_TOKENIZER = new Splitter(" .,;'\"()[]،؛!?؟");
 
         Corpus corpus = generateCorpus(new RandomDocumentGenerator(), 50); // new Farsi()
 
@@ -36,29 +47,13 @@ public class CorpusGeneratorTest {
         report.add(HTMLUtilities.DEFAULT_STYLE);
         report.add(new TokenizedHeading(new ArrayTokenized("Report"), 1));
 
-        ToString<Document> documentToString = new ToString<Document>() {
-            @Override
-            public String alternativeToString(Document document) {
-                try {
-                    return document.toString() + ": " + URLDecoder.decode(document.getSource(), "UTF-8");
-                } catch (UnsupportedEncodingException e) {
-                    return document.toString() + ": " + document.getSource();
-                }
-            }
-        };
-
         report.add(new TokenizedHeading(new ArrayTokenized("Articles used in the corpus"), 2));
-        report.add(HTMLUtilities.toList(corpus, false, documentToString));
+        report.add(HTMLUtilities.toList(corpus, false, DOCUMENT_TO_STRING));
 
         CorpusMeasure tfidf = corpus.getTFIDF();
         CorpusMeasure tfdf = corpus.getTFDF();
 
-        ToString<Double> doubleToString = new ToString<Double>() {
-            @Override
-            public String alternativeToString(Double value) {
-                return String.format("%.3f", value);
-            }
-        };
+        ToString<Double> doubleToString = ToString.getDoubleToString(3);
 
         RowPredicate<Textual, Double> p1 = new RowPredicate<Textual, Double>() {
             @Override

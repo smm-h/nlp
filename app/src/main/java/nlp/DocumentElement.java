@@ -7,6 +7,8 @@ package nlp;
  */
 public interface DocumentElement {
 
+    public String inspect(Inspector inspector);
+
     public String toHTML();
 
     public String toMarkdown();

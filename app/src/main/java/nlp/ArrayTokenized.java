@@ -50,9 +50,4 @@ public class ArrayTokenized extends ArrayList<Token> implements Tokenized {
         }
         return v;
     }
-
-    @Override
-    public String toString() {
-        return getContents();
-    }
 }

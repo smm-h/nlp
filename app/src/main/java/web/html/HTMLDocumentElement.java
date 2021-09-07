@@ -6,6 +6,7 @@ import java.util.Set;
 import org.jsoup.nodes.Element;
 
 import nlp.DocumentElement;
+import nlp.Utilities;
 import nlp.Splitter;
 import nlp.Tokenizer;
 import nlp.Tokenized;
@@ -14,11 +15,10 @@ import nlp.TokenizedParagraph;
 
 public abstract class HTMLDocumentElement implements DocumentElement {
 
-    public static Tokenizer DEFAULT_TOKENIZER;
     private static Set<String> SUPPORTED_TAGS;
 
     static {
-        DEFAULT_TOKENIZER = new Splitter(" ");
+        Utilities.DEFAULT_TOKENIZER = new Splitter(" ");
         SUPPORTED_TAGS = new HashSet<String>();
         SUPPORTED_TAGS.add("p");
         SUPPORTED_TAGS.add("h1");
@@ -40,7 +40,7 @@ public abstract class HTMLDocumentElement implements DocumentElement {
     }
 
     public static DocumentElement make(Element e) {
-        return make(e, DEFAULT_TOKENIZER);
+        return make(e, Utilities.DEFAULT_TOKENIZER);
     }
 
     public static DocumentElement make(Element e, Tokenizer tokenizer) {
@@ -48,7 +48,7 @@ public abstract class HTMLDocumentElement implements DocumentElement {
     }
 
     public static DocumentElement make(String tag, String data) {
-        return make(tag, data, DEFAULT_TOKENIZER);
+        return make(tag, data, Utilities.DEFAULT_TOKENIZER);
     }
 
     public static DocumentElement make(String tag, String data, Tokenizer tokenizer) {

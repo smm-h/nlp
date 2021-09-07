@@ -6,6 +6,13 @@ public interface Document extends List<DocumentElement>, Textual {
 
     public String getSource();
 
+    public default String inspect(Inspector inspector) {
+        StringBuilder builder = new StringBuilder();
+        for (DocumentElement element : this)
+            builder.append(element.inspect(inspector));
+        return builder.toString();
+    }
+
     public default String toHTML() {
         StringBuilder builder = new StringBuilder();
         for (DocumentElement element : this)

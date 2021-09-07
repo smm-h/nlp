@@ -1,7 +1,7 @@
 import nlp.ArrayTokenized;
 import nlp.Corpus;
 import nlp.Document;
-import nlp.DocumentUtilities;
+import nlp.Utilities;
 import nlp.HashCorpus;
 import nlp.TokenizedHeading;
 import nlp.TokenizedParagraph;
@@ -10,20 +10,20 @@ import nlp.ngram.ProbabilityTable;
 import web.html.HTMLDocument;
 import web.html.HTMLUtilities;
 
-public class NgramTest {
+public class NgramSmallTest {
     public static void main(String[] args) {
-        Document d1 = DocumentUtilities.getDocumentFromCharsAsTokens("acaa.");
-        Document d2 = DocumentUtilities.getDocumentFromCharsAsTokens("abba.");
-        Document d3 = DocumentUtilities.getDocumentFromCharsAsTokens("ccab.");
-        Document d4 = DocumentUtilities.getDocumentFromCharsAsTokens("aacc.");
-        Document d5 = DocumentUtilities.getDocumentFromCharsAsTokens("abac.");
+        Document d1 = Utilities.getDocumentFromCharsAsTokens("acaa.");
+        Document d2 = Utilities.getDocumentFromCharsAsTokens("abba.");
+        Document d3 = Utilities.getDocumentFromCharsAsTokens("ccab.");
+        Document d4 = Utilities.getDocumentFromCharsAsTokens("aacc.");
+        Document d5 = Utilities.getDocumentFromCharsAsTokens("abac.");
         Corpus corpus = new HashCorpus(d1, d2, d3, d4, d5);
 
-        int n = 2; // bi-gram
+        int n = 1; // bi-gram <=> n = 1
         CountTable ct = corpus.getCountTable(n);
         ProbabilityTable pt = corpus.getProbabilityTable(n);
 
-        System.out.println(pt.getProbabilityOf(DocumentUtilities.getTermFromCharsAsTokens("acc.")));
+        System.out.println(pt.getProbabilityOf(Utilities.getTermFromCharsAsTokens("acc.")));
 
         HTMLDocument report = new HTMLDocument();
         report.add(HTMLUtilities.DEFAULT_STYLE);

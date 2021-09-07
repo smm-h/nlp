@@ -7,7 +7,11 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import nlp.ArrayTokenized;
+import nlp.HTMLOnlyDocumentElement;
 import nlp.LinkedDocument;
+import nlp.TokenizedHeading;
+import nlp.TokenizedParagraph;
 
 public class HTMLDocument extends LinkedDocument {
 
@@ -35,5 +39,30 @@ public class HTMLDocument extends LinkedDocument {
     @Override
     public String getSource() {
         return source;
+    }
+
+    public void addHeading(String text, int level) {
+        add(new TokenizedHeading(new ArrayTokenized(text), level));
+    }
+
+    public void addParagraph(String text) {
+        add(new TokenizedParagraph(new ArrayTokenized(text)));
+    }
+
+    public void addTag(String tag, String contents) {
+        addTag(tag, contents, null);
+    }
+
+    public void addTag(String tag, String contents, String options) {
+        options = options == null || options.isEmpty() || options.isBlank() ? "" : " " + options;
+        addRawHTML("<" + tag + options + ">" + contents + "</" + tag + ">");
+    }
+
+    public void addRawCSS(String css) {
+        addRawHTML("<style>" + css + "</style>");
+    }
+
+    public void addRawHTML(String html) {
+        add(new HTMLOnlyDocumentElement(html));
     }
 }
