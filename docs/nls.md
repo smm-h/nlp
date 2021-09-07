@@ -4,6 +4,7 @@
 - **Yup'ik** is [polysynthetic](analytic-vs-synthetic-languages.md#synthetic-language) and has "no more than two thousand" [free morphemes](bound-vs-free-morphemes.md).
 - **Yoruba** and colloquial **Vietnamese** are [isolating languages](analytic-vs-synthetic-languages.md#isolating-language).
 - In **Latin** many [roots](root.md) cannot [stand alone](bound-vs-free-morphemes.md); e.g. "reg-" (king) must always be [suffixed](affixation.md).
+- "$200" would be pronounced as "two hundred dollars" in **English**, but as "lua selau tālā" in **Samoan**. [[w](https://en.wikipedia.org/wiki/Text_normalization#Applications)]
 
 ## English
 

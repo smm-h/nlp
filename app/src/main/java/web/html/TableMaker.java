@@ -4,12 +4,14 @@ import util.ToString;
 
 public class TableMaker {
     private final int columns;
+    private int rows;
     private final StringBuilder builder;
 
     private ToString<Object>[] toStrings;
 
     @SuppressWarnings("unchecked")
     public TableMaker(String... headers) {
+        rows = 0;
         columns = headers.length;
         toStrings = new ToString[columns];
         builder = new StringBuilder();
@@ -38,10 +40,15 @@ public class TableMaker {
             builder.append("</td>");
         }
         builder.append("</tr>");
+        rows++;
     }
 
     public String finish() {
-        builder.append("</table>");
-        return builder.toString();
+        if (rows == 0) {
+            return "";
+        } else {
+            builder.append("</table>");
+            return builder.toString();
+        }
     }
 }

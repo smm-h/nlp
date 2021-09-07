@@ -21,7 +21,7 @@ public class SpecialToken extends StringToken {
 
     @Override
     public String toString() {
-        return asString();
+        return getUnnormalized();
     }
 
 }

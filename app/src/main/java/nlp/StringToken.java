@@ -2,12 +2,27 @@ package nlp;
 
 public class StringToken implements Token {
 
-    private final String contents;
+    private final String unnormalized, normalized;
     private final Term term;
 
     public StringToken(String contents) {
-        this.contents = contents;
-        this.term = new LinkedTerm(this);
+        this(contents, null);
+    }
+
+    public StringToken(String contents, Normalizer normalizer) {
+        unnormalized = contents;
+        normalized = normalizer == null ? Token.super.normalize() : Token.super.normalize(normalizer);
+        term = new LinkedTerm(this);
+    }
+
+    @Override
+    public String normalize() {
+        return normalized;
+    }
+
+    @Override
+    public boolean isNormal() {
+        return normalized.equals(unnormalized);
     }
 
     @Override
@@ -19,7 +34,7 @@ public class StringToken implements Token {
     public boolean equals(Object obj) {
         if (obj instanceof StringToken) {
             StringToken token = (StringToken) obj;
-            return token.contents.equals(contents);
+            return token.normalized.equals(normalized);
         } else {
             return false;
         }
@@ -27,17 +42,17 @@ public class StringToken implements Token {
 
     @Override
     public int hashCode() {
-        return contents.hashCode();
+        return normalized.hashCode();
     }
 
     @Override
-    public String asString() {
-        return contents;
+    public String getUnnormalized() {
+        return unnormalized;
     }
 
     @Override
     public String toString() {
-        return "'" + contents + "'";
+        return "'" + normalized + "'";
     }
 
 }

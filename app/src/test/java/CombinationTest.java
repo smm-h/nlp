@@ -1,5 +1,9 @@
 
-import nlp.*;
+import nlp.Corpus;
+import nlp.HashVocabulary;
+import nlp.StringToken;
+import nlp.Term;
+import nlp.Vocabulary;
 
 public class CombinationTest {
     public static void main(String[] args) {

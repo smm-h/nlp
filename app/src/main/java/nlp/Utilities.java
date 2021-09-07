@@ -7,6 +7,10 @@ import java.util.List;
 
 public class Utilities {
 
+    public static Tokenizer DEFAULT_TOKENIZER;
+
+    public static Normalizer DEFAULT_NORMALIZER;
+
     public static Document getDocumentFromCharsAsTokens(String s) {
         String[] a = new String[s.length()];
         int i = 0;
@@ -29,8 +33,16 @@ public class Utilities {
         PLAIN_TEXT, MARKDOWN, EXTERNAL_HTML, INTERNAL_HTML
     }
 
+    public static Document getDocumentFromPath(Path path) throws IOException {
+        return getDocumentFromPath(path, Utilities.DEFAULT_TOKENIZER);
+    }
+
     public static Document getDocumentFromPath(Path path, Tokenizer tokenizer) throws IOException {
         return getDocumentFromLines(Files.readAllLines(path), DocumentReadingMethod.PLAIN_TEXT, tokenizer);
+    }
+
+    public static Document getDocumentFromPath(Path path, DocumentReadingMethod method) throws IOException {
+        return getDocumentFromPath(path, method, Utilities.DEFAULT_TOKENIZER);
     }
 
     public static Document getDocumentFromPath(Path path, DocumentReadingMethod method, Tokenizer tokenizer)
@@ -72,6 +84,4 @@ public class Utilities {
         string = string.trim();
         return (string.isEmpty()) ? null : new TokenizedParagraph(tokenizer.tokenize(string));
     }
-
-    public static Tokenizer DEFAULT_TOKENIZER;
 }

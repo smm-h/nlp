@@ -10,9 +10,10 @@ import web.html.TableMaker;
 public class SampleTokenizerTest {
     public static void main(String[] args) throws Exception {
 
-        Lexicon lexicon = new HashLexicon();
+        Utilities.DEFAULT_TOKENIZER = new Splitter();
+        Utilities.DEFAULT_NORMALIZER = new BaseFarsiNormalizer();
 
-        Tokenizer tokenizer = new Splitter();
+        Lexicon lexicon = new StoredHashLexicon(Path.of("C:/Users/SMM H/Desktop/nlp/res/ctpr/spellcheck-dict.txt"));
 
         Corpus corpus = new HashCorpus();
 
@@ -22,20 +23,43 @@ public class SampleTokenizerTest {
             @Override
             public String inspect(Tokenized tokenized) {
                 // "<span style=\"color:red;\">"+...+"</span>"
-                TableMaker maker = new TableMaker("Token", "TF", "DF", "TF-DF", "TF-IDF", "Exists in dict");
-                ToString n0 = ToString.getDoubleToString(0);
-                ToString n3 = ToString.getDoubleToString(3);
-                maker.setToString(1, n0);
-                maker.setToString(2, n0);
-                maker.setToString(3, n0);
-                maker.setToString(4, n3);
-                maker.setToString(5, (ToString) ToString.getBooleanToString("Yes", "No"));
+
+                // start making the table
+                TableMaker maker = new TableMaker("Token", "TF", "DF", "TF-DF", "TF-IDF", "Is normal?",
+                        "Exists in dict?");
+
+                // create string makers
+                ToString ts_integer = ToString.getDoubleToString(0);
+                ToString ts_3digits = ToString.getDoubleToString(3);
+                ToString ts_yesOrNo = (ToString) ToString.getBooleanToString("Yes", "No");
+
+                // assign string makers
+                maker.setToString(1, ts_integer);
+                maker.setToString(2, ts_integer);
+                maker.setToString(3, ts_integer);
+                maker.setToString(4, ts_3digits);
+                maker.setToString(5, ts_yesOrNo);
+                maker.setToString(6, ts_yesOrNo);
+
+                // add the rows
                 for (Token token : tokenized.getVocabulary()) {
+
+                    // prepare data
                     Term term = token.asTerm();
                     double tf = tokenized.getTermFrequency(term);
                     double df = corpus.getDocumentFrequency(term);
-                    maker.add(token, tf, df, tf * df, tf / df, lexicon.contains(token));
+                    double tfdf = tf * df;
+                    double tfidf = tf / df;
+                    boolean isNormal = token.isNormal();
+                    boolean isInDict = lexicon.contains(token);
+
+                    // filter and add
+                    if (tfidf > 1) {
+                        maker.add(token, tf, df, tfdf, tfidf, isNormal, isInDict);
+                    }
                 }
+
+                // finish making the table and return it
                 return maker.finish();
             }
         };
@@ -50,13 +74,13 @@ public class SampleTokenizerTest {
         // report.addRawCSS("pre {white-space: pre-wrap;}");
         report.addHeading("Tokenization Samples", 1);
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < z; i++) {
             Path path = Path.of("C:/Users/SMM H/Desktop/nlp/res/ctpr/tokenization-samples/sample" + i);
-            documents[i] = Utilities.getDocumentFromPath(path, tokenizer);
+            documents[i] = Utilities.getDocumentFromPath(path);
             corpus.add(documents[i]);
         }
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < z; i++) {
             report.addHeading("sample" + i, 2);
             report.addTag("p", documents[i].inspect(inspector));
         }

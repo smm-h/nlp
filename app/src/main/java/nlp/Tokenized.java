@@ -11,7 +11,7 @@ public interface Tokenized extends List<Token>, Textual {
     public default String getContents() {
         StringBuilder builder = new StringBuilder();
         for (Token token : this) {
-            builder.append(token.asString());
+            builder.append(token.getUnnormalized());
             builder.append(" ");
         }
         return builder.toString();

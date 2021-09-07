@@ -1,22 +1,21 @@
 # Course
 
-- [ ] Visualizations
-  - [x] Tables
-    - $TF-IDF$
-    - Count and probability tables for $n$-gram
-  - [ ] Graphs
-    - DFA
-    - MM and HMM
 - [x] Concepts
   - [x] [`Textual`](../app/src/main/java/nlp/Textual.java) (متنی)
   - [x] [`Token`](../app/src/main/java/nlp/Token.java)
   - [x] [`Term`](../app/src/main/java/nlp/Term.java)
-  - [x] [`Paragraph`](../app/src/main/java/nlp/Paragraph.java)
   - [x] [`Document`](../app/src/main/java/nlp/Document.java)
+    - [x] [`Heading`](../app/src/main/java/nlp/Headingz.java)
+    - [x] [`Paragraph`](../app/src/main/java/nlp/Paragraph.java)
     - [x] Document generation [[test](../app/src/test/java/DocumentGeneratorTest.java)] :ballot_box_with_check:
   - [x] [`Corpus`](../app/src/main/java/nlp/Corpus.java)
-  - [x] [`Vocabulary`](../app/src/main/java/nlp/Vocabulary.java)
+    - [x] [`Vocabulary`](../app/src/main/java/nlp/Vocabulary.java)
+    - [x] [`CountTable`](../app/src/main/java/nlp/ngram/CountTable.java)
+    - [x] [`ProbabilityTable`](../app/src/main/java/nlp/ngram/ProbabilityTable.java)
   - [x] [`Tokenizer`](../app/src/main/java/nlp/Tokenizer.java)
+  - [x] [`Normalizer`](../app/src/main/java/nlp/Normalizer.java)
+  - [x] [`Inspector`](../app/src/main/java/nlp/Inspector.java)
+  - [x] [`Lexicon`](../app/src/main/java/nlp/Lexicon.java)
 - [x] Measures
   - [x] $TF$
   - [x] $DF$
@@ -24,26 +23,25 @@
   - [x] $TF-IDF$ [[test](../app/src/test/java/TFIDFTest.java)] :ballot_box_with_check:
 - [x] Tokenization
   - [x] Space-split [[test](../app/src/test/java/SplitterTest.java)]
-  - [x] DFA [[test I](../app/src/test/java/DFATokenizerTest.java), [test II](../app/src/test/java/DFATokenizerSmallTest.java)] :ballot_box_with_check:
+  - [x] DFA [[test I](../app/src/test/java/DFATokenizerSmallTest.java), [test II](../app/src/test/java/DFATokenizerBigTest.java)] :ballot_box_with_check:
 - [x] Stop-word accumulation
   - [x] High TF and high DF [[test](../app/src/test/java/CorpusGeneratorTest.java)] :ballot_box_with_check:
-- [ ] Normalization :negative_squared_cross_mark:
-- [ ] Spell-checking and correction
-  - [ ] db of tokens
+- [x] Normalization [[w](https://en.wikipedia.org/wiki/Text_normalization), [test](../app/src/test/java/SampleTokenizerTest.java)] :ballot_box_with_check:
+- [x] Spell-checking
+  - [x] db of tokens
+  - [ ] Correction
   - [ ] searchable token-tree structure
   - [ ] Minimum Edit Distance :negative_squared_cross_mark:
 - [ ] Auto-derivation from roots
-- [ ] [Stemming and Lematization](lemmatization-vs-stemming.md) :negative_squared_cross_mark:
+- [ ] [Stemming and Lemmatization](lemmatization-vs-stemming.md) :negative_squared_cross_mark:
   - Problems
     - بیمارستان
     - رستم دستان
     - Phrasal verbs
 - [ ] Syntax analysis
-  - [x] $n$-gram :ballot_box_with_check:
-    - [x] Bigram [[test](../app/src/test/java/BigramTest.java)]
-    - [ ] Trigram
-    - [ ] Quadgram
-    - [ ] Unigram
+  - [x] $n$-gram [[test I](../app/src/test/java/NgramSmallTest.java), [test II](../app/src/test/java/NgramBigTest.java), [test III](../app/src/test/java/NgramBiggerTest.java)] :ballot_box_with_check:
+    - [x] Bigram
+    - [x] Trigram, Quadgram, Unigram [[test](../app/src/test/java/CombinationTest.java)]
   - [x] Count and probability tables
   - [ ] Smoothing
   - [ ] Count star
@@ -54,3 +52,10 @@
   - [ ] Markov chain
   - [ ] Markov model :negative_squared_cross_mark:
   - [ ] Hidden Markov model
+- [ ] Visualizations
+  - [x] Tables
+    - $TF-IDF$
+    - Count and probability tables for $n$-gram
+  - [ ] Graphs
+    - DFA
+    - MM and HMM
