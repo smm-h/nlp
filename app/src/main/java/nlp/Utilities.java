@@ -16,6 +16,18 @@ public class Utilities {
     public static Tokenizer DEFAULT_TOKENIZER;
 
     public static Normalizer DEFAULT_NORMALIZER;
+    public static Normalizer NO_NORMALIZER;
+
+    static {
+        NO_NORMALIZER = new Normalizer() {
+            @Override
+            public String normalize(String original) {
+                return original;
+            }
+        };
+
+        DEFAULT_NORMALIZER = NO_NORMALIZER;
+    }
 
     /**
      * Beginning of file/document
@@ -28,9 +40,14 @@ public class Utilities {
     public static final Token EOF = new SpecialToken("\u03C6");
 
     /**
+     * Beginning of token
+     */
+
+    public static final char BOT = '#';
+    /**
      * End of token
      */
-    public static final Token EOT = new SpecialToken("$");
+    public static final char EOT = '$';
 
     private static final Map<Integer, Term> pool = new HashMap<Integer, Term>();
 

@@ -29,8 +29,8 @@
 - [x] Normalization [[w](https://en.wikipedia.org/wiki/Text_normalization), [test](../app/src/test/java/SampleTokenizerTest.java)] :ballot_box_with_check:
 - [x] Spell-checking
   - [x] Correction using data-set of tokens
-  - [ ] Searchable token-tree structure
-  - [ ] Correction using _Minimum Edit Distance_ algorithm :negative_squared_cross_mark:
+  - [x] Searchable token-tree structure [[test](../app/src/test/java/HashStringTreeTest.java)]
+  - [x] _Minimum Edit Distance_ [[test](../app/src/test/java/LevenshteinDistanceTest.java)] :ballot_box_with_check:
 - [ ] Auto-derivation from roots
 - [ ] [Stemming and Lemmatization](lemmatization-vs-stemming.md) :negative_squared_cross_mark:
   - Problems
