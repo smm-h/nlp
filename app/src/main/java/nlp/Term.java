@@ -5,7 +5,7 @@ import java.util.List;
 public interface Term extends List<Token>, Comparable<Term> {
 
     public default Token getSafe(int index) {
-        return Corpus.getSafe(this, index);
+        return Utilities.getSafe(this, index);
     }
 
     @Override

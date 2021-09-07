@@ -1,8 +1,8 @@
 
-import nlp.Corpus;
 import nlp.HashVocabulary;
 import nlp.StringToken;
 import nlp.Term;
+import nlp.Utilities;
 import nlp.Vocabulary;
 
 public class CombinationTest {
@@ -13,7 +13,7 @@ public class CombinationTest {
         v.add(new StringToken("b"));
         v.add(new StringToken("c"));
         // v.add(new StringToken("d"));
-        Term[] a = Corpus.getAllCombinations(v, 3);
+        Term[] a = Utilities.getAllCombinations(v, 3);
         for (Term t : a) {
             System.out.println(t);
         }

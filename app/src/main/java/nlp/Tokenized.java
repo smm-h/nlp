@@ -5,7 +5,7 @@ import java.util.List;
 public interface Tokenized extends List<Token>, Textual {
 
     public default Token getSafe(int index) {
-        return Corpus.getSafe(this, index);
+        return Utilities.getSafe(this, index);
     }
 
     public default String getContents() {

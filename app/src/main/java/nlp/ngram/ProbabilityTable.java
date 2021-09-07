@@ -3,8 +3,8 @@ package nlp.ngram;
 import java.util.Map;
 
 import nlp.Token;
+import nlp.Utilities;
 import nlp.Term;
-import nlp.Corpus;
 
 public interface ProbabilityTable extends Map<Term, Map<Token, Double>> {
 
@@ -16,7 +16,7 @@ public interface ProbabilityTable extends Map<Term, Map<Token, Double>> {
 
         double p = 1;
         for (int i = 0; i < s + n; i++)
-            p *= getProbabilityOf(Corpus.getPrior(n, term, i), term.getSafe(i));
+            p *= getProbabilityOf(Utilities.getPrior(n, term, i), term.getSafe(i));
         return p;
     }
 

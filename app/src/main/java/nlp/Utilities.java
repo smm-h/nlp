@@ -3,13 +3,69 @@ package nlp;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+
+import jile.common.Common;
+import util.Tuple;
 
 public class Utilities {
 
     public static Tokenizer DEFAULT_TOKENIZER;
 
     public static Normalizer DEFAULT_NORMALIZER;
+
+    /**
+     * Beginning of file/document
+     */
+    public static final Token BOF = new SpecialToken("$");
+
+    /**
+     * End of file/document
+     */
+    public static final Token EOF = new SpecialToken("\u03C6");
+
+    /**
+     * End of token
+     */
+    public static final Token EOT = new SpecialToken("$");
+
+    private static final Map<Integer, Term> pool = new HashMap<Integer, Term>();
+
+    /**
+     * Avoid making unnecessary garbage, and take your terms from this pool of
+     * reusables.
+     */
+    public static Term getTermFromTokens(Token... tokens) {
+        if (tokens.length == 1) {
+            return tokens[0].asTerm();
+        } else {
+            int h = Tuple.collectiveHash(tokens);
+            if (pool.containsKey(h)) {
+                Term term = pool.get(h);
+                if (term.size() == tokens.length) {
+                    for (int i = 0; i < tokens.length; i++) {
+                        if (!Objects.equals(term.get(i), tokens[i])) {
+                            return forceConstruct(tokens);
+                        }
+                    }
+                    return term;
+                } else {
+                    return forceConstruct(tokens);
+                }
+            } else {
+                return forceConstruct(tokens);
+            }
+        }
+    }
+
+    private static Term forceConstruct(Token[] tokens) {
+        Term term = new LinkedTerm(tokens);
+        pool.put(term.hashCode(), term);
+        return term;
+    }
 
     public static Document getDocumentFromCharsAsTokens(String s) {
         String[] a = new String[s.length()];
@@ -34,7 +90,7 @@ public class Utilities {
     }
 
     public static Document getDocumentFromPath(Path path) throws IOException {
-        return getDocumentFromPath(path, Utilities.DEFAULT_TOKENIZER);
+        return getDocumentFromPath(path, DEFAULT_TOKENIZER);
     }
 
     public static Document getDocumentFromPath(Path path, Tokenizer tokenizer) throws IOException {
@@ -42,7 +98,7 @@ public class Utilities {
     }
 
     public static Document getDocumentFromPath(Path path, DocumentReadingMethod method) throws IOException {
-        return getDocumentFromPath(path, method, Utilities.DEFAULT_TOKENIZER);
+        return getDocumentFromPath(path, method, DEFAULT_TOKENIZER);
     }
 
     public static Document getDocumentFromPath(Path path, DocumentReadingMethod method, Tokenizer tokenizer)
@@ -83,5 +139,54 @@ public class Utilities {
     public static Paragraph getParagraphFromString(String string, Tokenizer tokenizer) {
         string = string.trim();
         return (string.isEmpty()) ? null : new TokenizedParagraph(tokenizer.tokenize(string));
+    }
+
+    public static Term[] getAllCombinations(Vocabulary vocabulary, int length) {
+
+        // convert the vocabulary set into an array of tokens
+        Token[] v = new Token[vocabulary.size() + 2];
+        int vid = 0;
+        v[vid++] = BOF;
+        v[vid++] = EOF;
+        for (Token t : vocabulary)
+            v[vid++] = t;
+
+        // B = number of individual tokens
+        int b = v.length;
+
+        // making mods: powers of B
+        int[] mod = new int[length + 1];
+        for (int i = 0; i <= length; i++) {
+            mod[i] = (int) Common.power(b, i);
+        }
+
+        // N = the last mod: B ^ L
+        int n = mod[length];
+
+        // iterate from 1 to N
+        Term[] t = new Term[n];
+        for (int i = 0; i < n; i++) {
+            Term x = new LinkedTerm();
+            for (int j = 1; j <= length; j++) {
+                x.add(v[(i % mod[j]) / mod[j - 1]]);
+            }
+            t[i] = x;
+        }
+        return t;
+    }
+
+    public static Term getPrior(int n, List<Token> tokenized, int index) {
+        Token[] array = new Token[n];
+        for (int i = 0; i < n; i++)
+            array[i] = getSafe(tokenized, index - n + i);
+        return getTermFromTokens(array);
+    }
+
+    public static Token getSafe(List<Token> list, int index) {
+        try {
+            return list.get(index);
+        } catch (IndexOutOfBoundsException e) {
+            return index < 0 ? BOF : EOF;
+        }
     }
 }

@@ -28,10 +28,9 @@
   - [x] High TF and high DF [[test](../app/src/test/java/CorpusGeneratorTest.java)] :ballot_box_with_check:
 - [x] Normalization [[w](https://en.wikipedia.org/wiki/Text_normalization), [test](../app/src/test/java/SampleTokenizerTest.java)] :ballot_box_with_check:
 - [x] Spell-checking
-  - [x] db of tokens
-  - [ ] Correction
-  - [ ] searchable token-tree structure
-  - [ ] Minimum Edit Distance :negative_squared_cross_mark:
+  - [x] Correction using data-set of tokens
+  - [ ] Searchable token-tree structure
+  - [ ] Correction using _Minimum Edit Distance_ algorithm :negative_squared_cross_mark:
 - [ ] Auto-derivation from roots
 - [ ] [Stemming and Lemmatization](lemmatization-vs-stemming.md) :negative_squared_cross_mark:
   - Problems

@@ -54,7 +54,9 @@ public class SampleTokenizerTest {
                     boolean isInDict = lexicon.contains(token);
 
                     // filter and add
-                    if (tfidf > 1) {
+                    // if (tfidf > 1) {
+                    // if (isInDict == false) {
+                    if (isInDict == false && tfidf > 1) {
                         maker.add(token, tf, df, tfdf, tfidf, isNormal, isInDict);
                     }
                 }

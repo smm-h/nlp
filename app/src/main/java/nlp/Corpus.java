@@ -1,92 +1,16 @@
 package nlp;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 
-import jile.common.Common;
 import nlp.ngram.CountTable;
 import nlp.ngram.HashCountTable;
 import nlp.ngram.HashProbabilityTable;
 import nlp.ngram.ProbabilityTable;
 import util.Secretly;
-import util.Tuple;
 
 public interface Corpus extends Set<Document>, Textual {
-
-    public static final Token BOF = new SpecialToken("$");
-    public static final Token EOF = new SpecialToken("\u03C6");
-
-    static final Map<Integer, Term> pool = new HashMap<Integer, Term>();
-
-    /**
-     * Avoid making unnecessary garbage, and take your terms from this pool of
-     * reusables.
-     */
-    public static Term getTermFromTokens(Token... tokens) {
-        if (tokens.length == 1) {
-            return tokens[0].asTerm();
-        } else {
-            int h = Tuple.collectiveHash(tokens);
-            if (pool.containsKey(h)) {
-                Term term = pool.get(h);
-                if (term.size() == tokens.length) {
-                    for (int i = 0; i < tokens.length; i++) {
-                        if (!Objects.equals(term.get(i), tokens[i])) {
-                            return forceConstruct(tokens);
-                        }
-                    }
-                    return term;
-                } else {
-                    return forceConstruct(tokens);
-                }
-            } else {
-                return forceConstruct(tokens);
-            }
-        }
-    }
-
-    private static Term forceConstruct(Token[] tokens) {
-        Term term = new LinkedTerm(tokens);
-        pool.put(term.hashCode(), term);
-        return term;
-    }
-
-    public static Term[] getAllCombinations(Vocabulary vocabulary, int length) {
-
-        // convert the vocabulary set into an array of tokens
-        Token[] v = new Token[vocabulary.size() + 2];
-        int vid = 0;
-        v[vid++] = BOF;
-        v[vid++] = EOF;
-        for (Token t : vocabulary)
-            v[vid++] = t;
-
-        // B = number of individual tokens
-        int b = v.length;
-
-        // making mods: powers of B
-        int[] mod = new int[length + 1];
-        for (int i = 0; i <= length; i++) {
-            mod[i] = (int) Common.power(b, i);
-        }
-
-        // N = the last mod: B ^ L
-        int n = mod[length];
-
-        // iterate from 1 to N
-        Term[] t = new Term[n];
-        for (int i = 0; i < n; i++) {
-            Term x = new LinkedTerm();
-            for (int j = 1; j <= length; j++) {
-                x.add(v[(i % mod[j]) / mod[j - 1]]);
-            }
-            t[i] = x;
-        }
-        return t;
-    }
 
     /**
      * @return The number of {@link Document}s that contain a given term, in this
@@ -141,26 +65,11 @@ public interface Corpus extends Set<Document>, Textual {
         return measure;
     }
 
-    public static Term getPrior(int n, List<Token> tokenized, int index) {
-        Token[] array = new Token[n];
-        for (int i = 0; i < n; i++)
-            array[i] = getSafe(tokenized, index - n + i);
-        return getTermFromTokens(array);
-    }
-
-    public static Token getSafe(List<Token> list, int index) {
-        try {
-            return list.get(index);
-        } catch (IndexOutOfBoundsException e) {
-            return index < 0 ? BOF : EOF;
-        }
-    }
-
     public default CountTable getCountTable(int n) {
 
         final CountTable table = new HashCountTable();
 
-        Term[] combinations = getAllCombinations(getVocabulary(), n);
+        Term[] combinations = Utilities.getAllCombinations(getVocabulary(), n);
 
         for (Term term : combinations) {
             Map<Token, Integer> r = new HashMap<Token, Integer>();
@@ -169,15 +78,15 @@ public interface Corpus extends Set<Document>, Textual {
                 r.put(tokenAgain, 0);
                 // System.out.println("> " + token + " x " + tokenAgain);
             }
-            r.put(EOF, 0);
+            r.put(Utilities.EOF, 0);
         }
 
         Map<Token, Integer> r = new HashMap<Token, Integer>();
-        table.put(getTermFromTokens(BOF), r);
+        table.put(Utilities.getTermFromTokens(Utilities.BOF), r);
         for (Token token : getVocabulary()) {
             r.put(token, 0);
         }
-        r.put(EOF, 0);
+        r.put(Utilities.EOF, 0);
 
         for (Document document : this) {
             for (DocumentElement element : document) {
@@ -198,7 +107,7 @@ public interface Corpus extends Set<Document>, Textual {
                 if (tokenized != null) {
                     int size = tokenized.size();
                     for (int i = 0; i < size + n; i++) {
-                        increment(table, getPrior(n, tokenized, i), tokenized.getSafe(i));
+                        increment(table, Utilities.getPrior(n, tokenized, i), tokenized.getSafe(i));
                     }
                 }
             }
@@ -215,7 +124,7 @@ public interface Corpus extends Set<Document>, Textual {
 
         final ProbabilityTable table = new HashProbabilityTable(n);
 
-        Term[] combinations = getAllCombinations(getVocabulary(), n);
+        Term[] combinations = Utilities.getAllCombinations(getVocabulary(), n);
 
         for (Term term : combinations) {
             Map<Token, Double> r = new HashMap<Token, Double>();
@@ -224,15 +133,15 @@ public interface Corpus extends Set<Document>, Textual {
                 r.put(tokenAgain, 0.0);
                 // System.out.println("> " + token + " x " + tokenAgain);
             }
-            r.put(EOF, 0.0);
+            r.put(Utilities.EOF, 0.0);
         }
 
         Map<Token, Double> r = new HashMap<Token, Double>();
-        table.put(getTermFromTokens(BOF), r);
+        table.put(Utilities.getTermFromTokens(Utilities.BOF), r);
         for (Token token : getVocabulary()) {
             r.put(token, 0.0);
         }
-        r.put(EOF, 0.0);
+        r.put(Utilities.EOF, 0.0);
 
         for (Document document : this) {
             for (DocumentElement element : document) {
@@ -253,7 +162,7 @@ public interface Corpus extends Set<Document>, Textual {
                 if (tokenized != null) {
                     int size = tokenized.size();
                     for (int i = 0; i < size + n; i++) {
-                        increment(table, getPrior(n, tokenized, i), tokenized.getSafe(i));
+                        increment(table, Utilities.getPrior(n, tokenized, i), tokenized.getSafe(i));
                     }
                 }
             }
