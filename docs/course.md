@@ -42,6 +42,7 @@
     - [x] Bigram
     - [x] Trigram, Quadgram, Unigram [[test](../app/src/test/java/CombinationTest.java)]
   - [x] Count and probability tables
+  - [x] Logarithmic
   - [ ] Smoothing
   - [ ] Count star
 - [ ] Parts-of-speech

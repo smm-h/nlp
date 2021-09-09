@@ -3,6 +3,7 @@ import nlp.Corpus;
 import nlp.Document;
 import nlp.Utilities;
 import nlp.HashCorpus;
+import nlp.Term;
 import nlp.TokenizedHeading;
 import nlp.TokenizedParagraph;
 import nlp.ngram.CountTable;
@@ -23,7 +24,11 @@ public class NgramSmallTest {
         CountTable ct = corpus.getCountTable(n);
         ProbabilityTable pt = corpus.getProbabilityTable(n);
 
-        System.out.println(pt.getProbabilityOf(Utilities.getTermFromCharsAsTokens("acc.")));
+        Term term = Utilities.getTermFromCharsAsTokens("acc.");
+        System.out.println("PRODUCT:");
+        System.out.println("p(" + term + ") = " + pt.getProbabilityOf(term));
+        System.out.println("\nSUM OF LOG:");
+        System.out.println("p(" + term + ") = " + pt.getLogarithmicProbabilityOf(term));
 
         HTMLDocument report = new HTMLDocument();
         report.add(HTMLUtilities.DEFAULT_STYLE);

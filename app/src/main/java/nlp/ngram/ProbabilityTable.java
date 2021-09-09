@@ -10,6 +10,16 @@ public interface ProbabilityTable extends Map<Term, Map<Token, Double>> {
 
     public int getN();
 
+    public default double getLogarithmicProbabilityOf(Term term) {
+        int n = getN();
+        int s = term.size();
+
+        double logp = 0;
+        for (int i = 0; i < s + n; i++)
+            logp += Math.log(getProbabilityOf(Utilities.getPrior(n, term, i), term.getSafe(i)));
+        return Math.exp(logp);
+    }
+
     public default double getProbabilityOf(Term term) {
         int n = getN();
         int s = term.size();
@@ -24,4 +34,10 @@ public interface ProbabilityTable extends Map<Term, Map<Token, Double>> {
         System.out.println("p(" + a + "|" + b + ") = " + String.format("%.4f", get(a).get(b)));
         return get(a).get(b);
     }
+
+    // public default void smooth(double value) {
+    // for (Map key : keySet()) {
+    // get(key).
+    // }
+    // }
 }

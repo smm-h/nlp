@@ -4,25 +4,22 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.Map;
 
-import nl.NaturalLanguage;
-import nl.languages.Farsi;
 import nlp.ArrayTokenized;
 import nlp.Corpus;
+import nlp.CorpusMeasure;
 import nlp.Document;
-import nlp.Utilities;
-import util.ToString;
 import nlp.HashCorpus;
 import nlp.Splitter;
-import nlp.CorpusMeasure;
 import nlp.Textual;
 import nlp.TokenizedHeading;
+import nlp.Utilities;
+import util.ToString;
 import web.html.HTMLDocument;
 import web.html.HTMLUtilities;
 import web.html.HTMLUtilities.RowPredicate;
 import web.wikipedia.DocumentGenerator;
 import web.wikipedia.RandomDocumentGenerator;
 
-@SuppressWarnings("unused")
 public class CorpusGeneratorTest {
     static ToString<Document> DOCUMENT_TO_STRING = new ToString<Document>() {
         @Override
@@ -55,12 +52,12 @@ public class CorpusGeneratorTest {
 
         ToString<Double> doubleToString = ToString.getDoubleToString(3);
 
-        RowPredicate<Textual, Double> p1 = new RowPredicate<Textual, Double>() {
-            @Override
-            public boolean check(Map<Textual, Double> rowMap) {
-                return rowMap.get(corpus) > 1.0;
-            }
-        };
+        // RowPredicate<Textual, Double> p1 = new RowPredicate<Textual, Double>() {
+        // @Override
+        // public boolean check(Map<Textual, Double> rowMap) {
+        // return rowMap.get(corpus) > 1.0;
+        // }
+        // };
 
         report.add(new TokenizedHeading(new ArrayTokenized("TF-IDF"), 2));
         report.add(HTMLUtilities.toTable("Token", tfidf, getPredicate(tfidf), doubleToString)); // getPredicate(tfidf)

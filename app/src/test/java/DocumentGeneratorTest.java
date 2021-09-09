@@ -1,8 +1,8 @@
 
 import java.io.IOException;
 
-import nl.NaturalLanguage;
-import nl.languages.Farsi;
+import nlp.languages.Farsi;
+import nlp.languages.NaturalLanguage;
 import vis.InFrame;
 import web.html.HTMLView;
 import web.wikipedia.DocumentGenerator;

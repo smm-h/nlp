@@ -2,14 +2,14 @@ package web.wikipedia;
 
 import java.io.IOException;
 
-import nl.NaturalLanguage;
+import nlp.languages.NaturalLanguage;
 import web.html.HTMLDocument;
 
 public class RandomDocumentGenerator implements DocumentGenerator {
     private final String url;
 
     public RandomDocumentGenerator(NaturalLanguage nl) {
-        this.url = nl.RANDOM_WIKIPEDIA_ARTICLE_URL;
+        this.url = nl.getRandomWikipediaArticleURL();
     }
 
     public RandomDocumentGenerator(String url) {

@@ -26,8 +26,12 @@ public interface Corpus extends Set<Document>, Textual {
     }
 
     public default CorpusMeasure getTFIDF() {
+        return getTFIDF(getVocabulary());
+    }
+
+    public default CorpusMeasure getTFIDF(Set<Token> vocab) {
         final CorpusMeasure measure = new HashCorpusMeasure(this);
-        for (Token token : getVocabulary()) {
+        for (Token token : vocab) {
             Term term = token.asTerm();
             double df = getDocumentFrequency(term);
             Map<Textual, Double> r = new HashMap<Textual, Double>();
@@ -46,8 +50,12 @@ public interface Corpus extends Set<Document>, Textual {
     }
 
     public default CorpusMeasure getTFDF() {
+        return getTFDF(getVocabulary());
+    }
+
+    public default CorpusMeasure getTFDF(Set<Token> vocab) {
         final CorpusMeasure measure = new HashCorpusMeasure(this);
-        for (Token token : getVocabulary()) {
+        for (Token token : vocab) {
             Term term = token.asTerm();
             double df = getDocumentFrequency(term);
             Map<Textual, Double> r = new HashMap<Textual, Double>();
@@ -66,15 +74,19 @@ public interface Corpus extends Set<Document>, Textual {
     }
 
     public default CountTable getCountTable(int n) {
+        return getCountTable(n, getVocabulary());
+    }
+
+    public default CountTable getCountTable(int n, Set<Token> vocab) {
 
         final CountTable table = new HashCountTable();
 
-        Term[] combinations = Utilities.getAllCombinations(getVocabulary(), n);
+        Term[] combinations = Utilities.getAllCombinations(vocab, n);
 
         for (Term term : combinations) {
             Map<Token, Integer> r = new HashMap<Token, Integer>();
             table.put(term, r);
-            for (Token tokenAgain : getVocabulary()) {
+            for (Token tokenAgain : vocab) {
                 r.put(tokenAgain, 0);
                 // System.out.println("> " + token + " x " + tokenAgain);
             }
@@ -83,7 +95,7 @@ public interface Corpus extends Set<Document>, Textual {
 
         Map<Token, Integer> r = new HashMap<Token, Integer>();
         table.put(Utilities.getTermFromTokens(Utilities.BOF), r);
-        for (Token token : getVocabulary()) {
+        for (Token token : vocab) {
             r.put(token, 0);
         }
         r.put(Utilities.EOF, 0);
@@ -118,18 +130,22 @@ public interface Corpus extends Set<Document>, Textual {
     private static void increment(CountTable countTable, Term a, Token b) {
         Map<Token, Integer> c = countTable.get(a);
         c.put(b, c.get(b) + 1);
-    };
+    }
 
     public default ProbabilityTable getProbabilityTable(int n) {
+        return getProbabilityTable(n, getVocabulary());
+    }
+
+    public default ProbabilityTable getProbabilityTable(int n, Set<Token> vocab) {
 
         final ProbabilityTable table = new HashProbabilityTable(n);
 
-        Term[] combinations = Utilities.getAllCombinations(getVocabulary(), n);
+        Term[] combinations = Utilities.getAllCombinations(vocab, n);
 
         for (Term term : combinations) {
             Map<Token, Double> r = new HashMap<Token, Double>();
             table.put(term, r);
-            for (Token tokenAgain : getVocabulary()) {
+            for (Token tokenAgain : vocab) {
                 r.put(tokenAgain, 0.0);
                 // System.out.println("> " + token + " x " + tokenAgain);
             }
@@ -138,7 +154,7 @@ public interface Corpus extends Set<Document>, Textual {
 
         Map<Token, Double> r = new HashMap<Token, Double>();
         table.put(Utilities.getTermFromTokens(Utilities.BOF), r);
-        for (Token token : getVocabulary()) {
+        for (Token token : vocab) {
             r.put(token, 0.0);
         }
         r.put(Utilities.EOF, 0.0);

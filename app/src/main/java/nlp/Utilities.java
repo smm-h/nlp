@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 import jile.common.Common;
 import util.Tuple;
@@ -158,7 +159,7 @@ public class Utilities {
         return (string.isEmpty()) ? null : new TokenizedParagraph(tokenizer.tokenize(string));
     }
 
-    public static Term[] getAllCombinations(Vocabulary vocabulary, int length) {
+    public static Term[] getAllCombinations(Set<Token> vocabulary, int length) {
 
         // convert the vocabulary set into an array of tokens
         Token[] v = new Token[vocabulary.size() + 2];

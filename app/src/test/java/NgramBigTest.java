@@ -1,8 +1,8 @@
 import nlp.ArrayTokenized;
-import nl.languages.*;
 import nlp.Corpus;
 import nlp.TokenizedHeading;
 import nlp.TokenizedParagraph;
+import nlp.languages.Farsi;
 import nlp.ngram.CountTable;
 import nlp.ngram.ProbabilityTable;
 import web.html.HTMLDocument;
@@ -12,7 +12,7 @@ import web.wikipedia.RandomDocumentGenerator;
 public class NgramBigTest {
     public static void main(String[] args) {
 
-        int n = 2;
+        int n = 1;
 
         Corpus corpus = CorpusGeneratorTest.generateCorpus(new RandomDocumentGenerator(new Farsi()), 1);
         CountTable ct = corpus.getCountTable(n);
@@ -20,7 +20,7 @@ public class NgramBigTest {
 
         HTMLDocument report = new HTMLDocument();
         report.add(HTMLUtilities.DEFAULT_STYLE);
-        report.add(new TokenizedHeading(new ArrayTokenized("Report"), 1));
+        report.add(new TokenizedHeading(new ArrayTokenized("Report"), 5));
 
         report.add(new TokenizedHeading(new ArrayTokenized("Articles used in the corpus"), 2));
         report.add(HTMLUtilities.toList(corpus, false, CorpusGeneratorTest.DOCUMENT_TO_STRING));
