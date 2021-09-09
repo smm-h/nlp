@@ -2,7 +2,7 @@ package nlp;
 
 import java.util.Map;
 
-public interface MapNormalizer extends Map<Character, Character>, SingleCharacterNormalizer {
+public interface SingleCharacterMapNormalizer extends Map<Character, Character>, SingleCharacterNormalizer {
 
     @Override
     public default char normalize(char c) {

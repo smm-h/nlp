@@ -9,10 +9,10 @@ import nlp.Corpus;
 import nlp.CorpusMeasure;
 import nlp.Document;
 import nlp.HashCorpus;
-import nlp.Splitter;
+// import nlp.Splitter;
 import nlp.Textual;
 import nlp.TokenizedHeading;
-import nlp.Utilities;
+// import nlp.Utilities;
 import util.ToString;
 import web.html.HTMLDocument;
 import web.html.HTMLUtilities;
@@ -35,7 +35,7 @@ public class CorpusGeneratorTest {
     public static void main(String[] args) {
 
         // HTMLDocumentElement.DEFAULT_TOKENIZER = DFATokenizerBigTest.getTokenizer();
-        Utilities.DEFAULT_TOKENIZER = new Splitter(" .,;'\"()[]،؛!?؟");
+        // Utilities.DEFAULT_TOKENIZER = new Splitter(" .,;'\"()[]،؛!?؟");
 
         Corpus corpus = generateCorpus(new RandomDocumentGenerator(), 50); // new Farsi()
 

@@ -9,6 +9,15 @@ public class ArrayTokenized extends ArrayList<Token> implements Tokenized {
     private final Map<Term, Boolean> containsCache = new HashMap<Term, Boolean>();
     private Vocabulary v;
 
+    public ArrayTokenized() {
+    }
+
+    public ArrayTokenized(Iterable<String> strings) {
+        for (String s : strings) {
+            add(new StringToken(s));
+        }
+    }
+
     public ArrayTokenized(String... strings) {
         for (String s : strings) {
             add(new StringToken(s));

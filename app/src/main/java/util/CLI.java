@@ -39,6 +39,8 @@ public class CLI {
 
     private final Stack<AlternativeQuestion> stack;
 
+    private AlternativeQuestion q0 = null;
+
     public CLI() {
         scanner = new Scanner(System.in);
         stack = new Stack<AlternativeQuestion>();
@@ -47,6 +49,9 @@ public class CLI {
     public void laterAsk(AlternativeQuestion q) {
         stack.push(q);
         if (stack.size() == 1) {
+            if (q0 == null) {
+                q0 = q;
+            }
             start();
         }
     }
@@ -56,7 +61,9 @@ public class CLI {
         while (!stack.isEmpty()) {
             q = stack.pop();
             Runnable effect = q.getEffect(q.ask());
-            if (effect != null)
+            if (effect == null)
+                laterAsk(q0);
+            else
                 effect.run();
         }
     }
@@ -70,16 +77,20 @@ public class CLI {
         };
     }
 
+    public void print() {
+        System.out.println();
+    }
+
     public void print(Object object) {
         System.out.println(object.toString());
     }
 
     public YesNoQuestion makeYesNoQuestion(String body) {
-        return makeYesNoQuestion(body, false, null);
+        return makeYesNoQuestion(body, null);
     }
 
-    public YesNoQuestion makeYesNoQuestion(String body, boolean cancellable, Runnable onCancel) {
-        AlternativeQuestion q = new AlternativeQuestionImplementation(body, cancellable, onCancel);
+    public YesNoQuestion makeYesNoQuestion(String body, Runnable onCancel) {
+        AlternativeQuestion q = new AlternativeQuestionImplementation(body, onCancel);
         q.addOption("Yes");
         q.addOption("No");
         return new YesNoQuestion() {
@@ -91,11 +102,15 @@ public class CLI {
     }
 
     public AlternativeQuestion makeAlternativeQuestion(String body) {
-        return makeAlternativeQuestion(body, false, null);
+        return makeAlternativeQuestion(body, null);
     }
 
-    public AlternativeQuestion makeAlternativeQuestion(String body, boolean cancellable, Runnable onCancel) {
-        return new AlternativeQuestionImplementation(body, cancellable, onCancel);
+    public AlternativeQuestion makeAlternativeQuestion(String body, Runnable onCancel) {
+        return new AlternativeQuestionImplementation(body, onCancel);
+    }
+
+    public OpenQuestion<String> makeOpenQuestion(String body) {
+        return makeOpenQuestion(body, (String s) -> s, false, null);
     }
 
     public <T> OpenQuestion<T> makeOpenQuestion(String body, Convertor<String, T> convertor) {
@@ -143,13 +158,13 @@ public class CLI {
         private final boolean[] symbols;
         private final Map<Character, Integer> keymap;
 
-        public AlternativeQuestionImplementation(String body, boolean cancellable, Runnable onCancel) {
-            super(body, cancellable);
+        public AlternativeQuestionImplementation(String body, Runnable onCancel) {
+            super(body, onCancel != null);
             effects = new HashMap<Integer, Runnable>();
             options = new ArrayList<String>();
             symbols = new boolean[26];
             keymap = new HashMap<Character, Integer>();
-            if (cancellable) {
+            if (isCancellable()) {
                 symbols[23] = true;
                 keymap.put('X', 0);
                 effects.put(0, onCancel);
@@ -164,6 +179,7 @@ public class CLI {
 
         @Override
         public Integer ask() {
+            print();
             print(getBody());
             int i = 0;
             for (String option : options) {
@@ -242,6 +258,7 @@ public class CLI {
 
         @Override
         public T ask() {
+            print();
             print(getBody());
             if (isCancellable())
                 print("(DO NOT ENTER ANYTHING TO CANCEL)");

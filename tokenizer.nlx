@@ -1,0 +1,21 @@
+// free-form
+streak ' \t\r\n\f' as whitespace
+ignore whitespace
+
+// English characters
+streak '[A-Z][a-z]' as word
+streak '[0-9]' as digits
+streak '~!@#$%^&*()-_=+/|\<>[]:;.,"' as punctuation
+
+// apostrophe
+verbatim "'"
+
+// Farsi characters
+// https://en.wikipedia.org/wiki/Persian_alphabet
+streak 'ءأئؤابپتثجچحخدذرزژسشصضطظعغفقکكگلمنوهیيـ' as fword
+streak '۰۱۲۳۴۵۶۷۸۹' as fdigits
+// streak '۰٠۱١۲٢۳٣۴٤۵٥۶٦۷٧۸٨۹٩' as fdigits
+streak '٪،٫٬٭؛»«-–' as fpunctuation
+
+// zwnj
+verbatim ''

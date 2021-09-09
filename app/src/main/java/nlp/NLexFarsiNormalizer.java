@@ -6,7 +6,7 @@ public class NLexFarsiNormalizer extends BaseFarsiNormalizer {
         put('٪', '%');
         put('،', ',');
         put('٫', '.');
-        put('٬', '٬');
+        put('٬', ',');
         put('٭', '*');
         put("ٯڨڧ", 'ﻕ');
         put("ٱٳٵٲ", 'ﺍ');

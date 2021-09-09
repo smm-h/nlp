@@ -13,6 +13,8 @@ import java.awt.Desktop;
 
 public class HTMLUtilities {
 
+    // "<span style=\"color:red;\">"+...+"</span>" TODO
+
     public static final DocumentElement DEFAULT_STYLE = new HTMLOnlyDocumentElement(
             "<link rel=\"stylesheet\" href=\"C:\\Android\\sdk\\docs\\assets\\css\\default.css\">");
 

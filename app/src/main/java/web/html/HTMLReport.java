@@ -1,16 +1,21 @@
 package web.html;
 
-public abstract class HTMLReport extends HTMLDocument implements Runnable {
+public abstract class HTMLReport implements Runnable {
+
+    private final String title;
+    protected HTMLDocument report;
 
     public HTMLReport(String title) {
-        addTag("title", title);
-        add(HTMLUtilities.DEFAULT_STYLE);
+        this.title = title;
     }
 
     @Override
     public void run() {
+        report = new HTMLDocument();
+        report.addTag("title", title);
+        report.add(HTMLUtilities.DEFAULT_STYLE);
         beforeShowing();
-        HTMLUtilities.show(this);
+        HTMLUtilities.show(report);
         afterShowing();
     }
 

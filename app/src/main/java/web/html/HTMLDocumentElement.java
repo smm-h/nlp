@@ -7,7 +7,7 @@ import org.jsoup.nodes.Element;
 
 import nlp.DocumentElement;
 import nlp.Utilities;
-import nlp.Splitter;
+// import nlp.Splitter;
 import nlp.Tokenizer;
 import nlp.Tokenized;
 import nlp.TokenizedHeading;
@@ -18,7 +18,7 @@ public abstract class HTMLDocumentElement implements DocumentElement {
     private static Set<String> SUPPORTED_TAGS;
 
     static {
-        Utilities.DEFAULT_TOKENIZER = new Splitter(" ");
+        // Utilities.DEFAULT_TOKENIZER = new Splitter(" ");
         SUPPORTED_TAGS = new HashSet<String>();
         SUPPORTED_TAGS.add("p");
         SUPPORTED_TAGS.add("h1");

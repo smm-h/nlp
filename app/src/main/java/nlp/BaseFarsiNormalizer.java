@@ -1,6 +1,6 @@
 package nlp;
 
-public class BaseFarsiNormalizer extends HashMapNormalizer {
+public class BaseFarsiNormalizer extends SingleCharacterHashMapNormalizer {
 
     public BaseFarsiNormalizer() {
 
