@@ -26,6 +26,10 @@ public interface ToString<T> {
         };
     }
 
+    public static ToString<Boolean> getBooleanToString() {
+        return getBooleanToString("Yes", "No");
+    }
+
     public static ToString<Boolean> getBooleanToString(String whenTrue, String whenFalse) {
         return new ToString<Boolean>() {
             @Override

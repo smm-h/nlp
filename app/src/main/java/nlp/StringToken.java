@@ -16,6 +16,11 @@ public class StringToken implements Token {
     }
 
     @Override
+    public String getType() {
+        return "untyped";
+    }
+
+    @Override
     public String normalize() {
         return normalized;
     }

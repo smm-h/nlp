@@ -10,4 +10,6 @@ public interface Inspector {
 
     public static Inspector INSPECTOR_VOCABULARY = (Tokenized t) -> t.getVocabulary().toString();
 
+    public static Inspector INSPECTOR_TOKENS_TABLE = (Tokenized t) -> "<tr><td>" + t.getContents() + "</td><td><pre>"
+            + t.toString() + "</pre></td></tr>";
 }

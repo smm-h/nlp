@@ -4,6 +4,8 @@ import java.util.List;
 
 public interface Document extends List<DocumentElement>, Textual {
 
+    public boolean isSourceURL();
+
     public String getSource();
 
     public default String inspect(Inspector inspector) {

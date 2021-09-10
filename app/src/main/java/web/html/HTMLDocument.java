@@ -37,6 +37,11 @@ public class HTMLDocument extends LinkedDocument {
     }
 
     @Override
+    public boolean isSourceURL() {
+        return true;
+    }
+
+    @Override
     public String getSource() {
         return source;
     }

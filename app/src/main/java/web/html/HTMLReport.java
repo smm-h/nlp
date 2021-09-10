@@ -14,12 +14,16 @@ public abstract class HTMLReport implements Runnable {
         report = new HTMLDocument();
         report.addTag("title", title);
         report.add(HTMLUtilities.DEFAULT_STYLE);
-        beforeShowing();
-        HTMLUtilities.show(report);
-        afterShowing();
+        if (beforeShowing()) {
+            HTMLUtilities.show(report);
+            afterShowing();
+        }
     }
 
-    public abstract void beforeShowing();
+    /**
+     * @return True, if it was cancelled.
+     */
+    public abstract boolean beforeShowing();
 
     public abstract void afterShowing();
 }

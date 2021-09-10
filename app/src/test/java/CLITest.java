@@ -2,11 +2,15 @@
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.*;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 import nlp.Corpus;
-import nlp.*;
+import nlp.Document;
 import nlp.HashCorpus;
 import nlp.Inspector;
 import nlp.LevenshteinDistance;
@@ -14,25 +18,22 @@ import nlp.Lexicon;
 import nlp.NilicTokenizer;
 import nlp.StoredHashLexicon;
 import nlp.Term;
-import nlp.Textual;
 import nlp.Token;
+import nlp.TokenMetric;
 import nlp.Utilities;
 import nlp.languages.Farsi;
 import nlp.languages.NaturalLanguage;
-import nlp.ngram.CountTable;
-import nlp.ngram.ProbabilityTable;
-import util.*;
+import util.CLI;
 import util.ToString;
 import util.cli.AlternativeQuestion;
 import util.cli.OpenQuestion;
-import util.cli.YesNoQuestion;
 import web.html.HTMLReport;
 import web.html.HTMLUtilities;
 import web.html.TableMaker;
-import web.html.HTMLUtilities.RowPredicate;
 import web.html.TableMaker.RowMaker;
 import web.wikipedia.RandomDocumentGenerator;
 
+// @SuppressWarnings("unused")
 public class CLITest extends CLI {
 
     NaturalLanguage nl = new Farsi();
@@ -72,16 +73,31 @@ public class CLITest extends CLI {
         inCorpus = makeAlternativeQuestion("You are inside a corpus:", goTo(start));
         inDocument = makeAlternativeQuestion("You are inside a document:", goTo(inCorpus));
 
-        start.addOption("Find a corpus file from disk", UNSUPPORTED); // TODO
+        // start.addOption("Open a corpus file from disk", UNSUPPORTED); // TODO
 
-        start.addOption("Create a new corpus from input", new Runnable() {
+        start.addOption("Open the symbolic corpus file from disk", new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    currentCorpus = new HashCorpus();
+                    for (String s : Files.readAllLines(Path.of("C:/Users/SMM H/Desktop/nlp/res/symbolic-corpus.txt"))) {
+                        currentCorpus.add(Utilities.getDocumentFromCharsAsTokens(s));
+                    }
+                    laterAsk(inCorpus);
+                } catch (IOException e) {
+                    print("Failed to read the symbolic corpus file.");
+                }
+            }
+        });
+
+        start.addOption("Create a new symbolic corpus from input using characters as tokens", new Runnable() {
             @Override
             public void run() {
                 currentCorpus = new HashCorpus();
-                print("Enter lines as documents of characters, use blank line to stop.");
+                print("Enter lines as documents of characters, use '-' line to stop.");
                 while (true) {
                     String s = WHAT.ask();
-                    if (s.isBlank()) {
+                    if (s.equals("-")) {
                         break;
                     } else {
                         currentCorpus.add(Utilities.getDocumentFromCharsAsTokens(s));
@@ -91,13 +107,51 @@ public class CLITest extends CLI {
             };
         });
 
-        start.addOption("Generate a new corpus from Wikipedia", new HTMLReport("Articles in Corpus") {
+        start.addOption("Generate a new corpus from Wikipedia", new Runnable() {
             @Override
-            public void beforeShowing() {
+            public void run() {
                 currentCorpus = CorpusGeneratorTest.generateCorpus(new RandomDocumentGenerator(nl), HOW_MANY.ask());
-                report.addHeading("Corpus generated from Wikipedia articles", 1);
-                report.add(HTMLUtilities.toList(currentCorpus, false, CorpusGeneratorTest.DOCUMENT_TO_STRING));
-            };
+                laterAsk(inCorpus);
+            }
+        });
+
+        final ToString<Document> ts_doc = new ToString<Document>() {
+            @Override
+            public String alternativeToString(Document document) {
+                StringBuilder sb = new StringBuilder();
+                sb.append(document.toString());
+                sb.append(" (Source: ");
+                String src;
+                try {
+                    src = URLDecoder.decode(document.getSource(), "UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    src = document.getSource();
+                }
+                if (document.isSourceURL()) {
+                    src = HTMLUtilities.makeLink(src);
+                }
+                sb.append(src);
+                sb.append("): <pre>");
+                int limit = 64;
+                String dt = document.toPlainText();
+                if (dt.length() > limit) {
+                    sb.append(dt.substring(0, limit));
+                    sb.append("...");
+                } else {
+                    sb.append(dt);
+                }
+                sb.append("</pre>");
+                return sb.toString();
+            }
+        };
+
+        inCorpus.addOption("See a list of all the documents in the corpus", new HTMLReport("Documents in the corpus") {
+            @Override
+            public boolean beforeShowing() {
+                report.addHeading("Documents in the corpus", 1);
+                report.add(HTMLUtilities.toList(currentCorpus, false, ts_doc));
+                return true;
+            }
 
             @Override
             public void afterShowing() {
@@ -105,7 +159,7 @@ public class CLITest extends CLI {
             }
         });
 
-        inCorpus.addOption("See the list of documents", new Runnable() {
+        inCorpus.addOption("Open a specific document", new Runnable() {
             @Override
             public void run() {
                 AlternativeQuestion q = makeAlternativeQuestion("Here is a list of documents in the corpus:",
@@ -123,16 +177,19 @@ public class CLITest extends CLI {
             }
         });
 
-        inCorpus.addOption("Add documents to corpus", UNSUPPORTED); // TODO
+        // inCorpus.addOption("Add documents to corpus", UNSUPPORTED); // TODO
 
         inCorpus.addOption("Tokenize corpus", new HTMLReport("Tokenized") {
             @Override
-            public void beforeShowing() {
+            public boolean beforeShowing() {
                 report.addRawCSS("pre {white-space: pre-wrap;}");
                 report.addHeading("Tokenized", 1);
                 for (Document d : currentCorpus) {
-                    report.addTag("pre", d.inspect(Inspector.INSPECTOR_TOKENS));
+                    report.addHeading(d.toString(), 2);
+                    // report.addTag("pre", d.inspect(Inspector.INSPECTOR_TOKENS));
+                    report.addTag("table", d.inspect(Inspector.INSPECTOR_TOKENS_TABLE));
                 }
+                return true;
             }
 
             @Override
@@ -143,7 +200,7 @@ public class CLITest extends CLI {
 
         inCorpus.addOption("See the sources of the documents in the corpus", new HTMLReport("Sources") {
             @Override
-            public void beforeShowing() {
+            public boolean beforeShowing() {
                 report.addHeading("Sources", 1);
                 String src;
                 for (Document d : currentCorpus) {
@@ -155,6 +212,7 @@ public class CLITest extends CLI {
                     report.addHeading(d.toString(), 2);
                     report.addParagraph("Source: " + src);
                 }
+                return true;
             }
 
             @Override
@@ -163,15 +221,20 @@ public class CLITest extends CLI {
             }
         });
 
-        ToString<Double> ts_integer = ToString.getDoubleToString(0);
-        ToString<Double> ts_3digits = ToString.getDoubleToString(3);
-        ToString<Boolean> ts_yesOrNo = ToString.getBooleanToString("Yes", "No");
+        final ToString<Double> ts_0digits = ToString.getDoubleToString(0);
+        final ToString<Double> ts_3digits = ToString.getDoubleToString(3);
+        final ToString<Boolean> ts_yesOrNo = ToString.getBooleanToString();
 
         inCorpus.addOption("See the vocabulary of the corpus", new HTMLReport("Vocabulary") {
             @Override
-            public void beforeShowing() {
+            public boolean beforeShowing() {
 
                 Set<Token> filteredVocabulary = filterVocabulary();
+
+                if (filteredVocabulary == null) {
+                    laterAsk(inCorpus);
+                    return false;
+                }
 
                 // ask the user which columns to add
                 List<String> columns = new LinkedList<String>();
@@ -185,6 +248,7 @@ public class CLITest extends CLI {
 
                 // add the columns
                 columns.add("Token");
+                columns.add("Token type");
                 if (v_tf)
                     columns.add("TF");
                 if (v_df)
@@ -217,13 +281,14 @@ public class CLITest extends CLI {
                         List<String> row = new LinkedList<String>();
 
                         // add strings to the row
-                        row.add(token.toString());
+                        row.add(token.normalize());
+                        row.add(token.getType());
                         if (v_tf)
-                            row.add(ts_integer.alternativeToString(tf));
+                            row.add(ts_0digits.alternativeToString(tf));
                         if (v_df)
-                            row.add(ts_integer.alternativeToString(df));
+                            row.add(ts_0digits.alternativeToString(df));
                         if (v_tfdf)
-                            row.add(ts_integer.alternativeToString(tfdf));
+                            row.add(ts_0digits.alternativeToString(tfdf));
                         if (v_tfidf)
                             row.add(ts_3digits.alternativeToString(tfidf));
                         if (v_isNormal)
@@ -239,6 +304,7 @@ public class CLITest extends CLI {
                 // add the table itself
                 report.addHeading("Vocabulary", 1);
                 report.addRawHTML(tableMaker.finish());
+                return true;
             }
 
             @Override
@@ -249,22 +315,33 @@ public class CLITest extends CLI {
 
         inCorpus.addOption("See an n-gram analysis of the corpus", new HTMLReport("N-gram") {
             @Override
-            public void beforeShowing() {
+            public boolean beforeShowing() {
 
-                int n = HOW_MANY.ask() - 1;
+                Integer n = HOW_MANY.ask();
+
+                if (n == null) {
+                    laterAsk(inCorpus);
+                    return false;
+                }
+
+                n--;
 
                 Set<Token> filteredVocabulary = filterVocabulary();
+
+                if (filteredVocabulary == null) {
+                    laterAsk(inCorpus);
+                    return false;
+                }
 
                 report.addHeading(Integer.toString(n + 1) + "-gram", 1);
 
                 report.addHeading("Count Table", 2);
-                CountTable ct = currentCorpus.getCountTable(n, filteredVocabulary);
-                report.add(HTMLUtilities.toTable(ct));
+                report.add(HTMLUtilities.toTable(currentCorpus.getCountTable(n, filteredVocabulary)));
 
                 report.addHeading("Probability Table", 2);
-                ProbabilityTable pt = currentCorpus.getProbabilityTable(n, filteredVocabulary);
-                report.add(HTMLUtilities.toTable(pt));
+                report.add(HTMLUtilities.toTable(currentCorpus.getProbabilityTable(n, filteredVocabulary)));
 
+                return true;
             }
 
             @Override
@@ -273,36 +350,35 @@ public class CLITest extends CLI {
             }
         });
 
-        ToString<Double> doubleToString = ToString.getDoubleToString(3);
+        // ToString<Double> doubleToString = ToString.getDoubleToString(3);
 
-        RowPredicate<Textual, Double> p = new RowPredicate<Textual, Double>() {
+        // RowPredicate<Textual, Double> p = new RowPredicate<Textual, Double>() {
+        // @Override
+        // public boolean check(Map<Textual, Double> rowMap) {
+        // return rowMap.get(currentCorpus) > 1.0;
+        // }
+        // };
+
+        // YesNoQuestion m = makeYesNoQuestion("Only see tokens with measures more than
+        // 1?");
+
+        inCorpus.addOption("See the TF-IDF of the corpus", new HTMLReport("TF, DF, and TF-IDF") {
             @Override
-            public boolean check(Map<Textual, Double> rowMap) {
-                return rowMap.get(currentCorpus) > 1.0;
-            }
-        };
-
-        YesNoQuestion m = makeYesNoQuestion("Only see tokens with measures more than 1?", goTo(inCorpus));
-
-        inCorpus.addOption("See the important words of the corpus using high TFIDF", new HTMLReport("TF-IDF") {
-            @Override
-            public void beforeShowing() {
-                report.addHeading("TF-IDF", 1);
-                report.add(
-                        HTMLUtilities.toTable("Token", currentCorpus.getTFIDF(), m.ask() ? p : null, doubleToString));
-            }
-
-            @Override
-            public void afterShowing() {
-                laterAsk(inCorpus);
-            }
-        });
-
-        inCorpus.addOption("See the stop-words of the corpus using high TFDF", new HTMLReport("TF-DF") {
-            @Override
-            public void beforeShowing() {
-                report.addHeading("TF-DF", 1);
-                report.add(HTMLUtilities.toTable("Token", currentCorpus.getTFDF(), m.ask() ? p : null, doubleToString));
+            public boolean beforeShowing() {
+                report.addHeading("Measures", 1);
+                report.addHeading("Size", 2);
+                List<String> list = new LinkedList<String>();
+                list.add("Unique tokens: " + currentCorpus.sizeUnique());
+                list.add("Total tokens: " + currentCorpus.sizeNonUnique());
+                report.add(HTMLUtilities.toList(list, false));
+                report.addHeading("TF", 2);
+                report.add(HTMLUtilities.toTable("Token", currentCorpus.getTF(), null, ts_0digits));
+                report.addHeading("DF", 2);
+                report.add(HTMLUtilities.toTable("Token", currentCorpus.getDF(), null, ts_0digits));
+                report.addHeading("TF-IDF", 2);
+                report.add(HTMLUtilities.toTable("Token", currentCorpus.getTFIDF(), null, ts_3digits));
+                // m.ask() ? p : null
+                return true;
             }
 
             @Override
@@ -342,12 +418,13 @@ public class CLITest extends CLI {
             }
         });
 
-        inCorpus.addOption("Stem a input string", UNSUPPORTED); // TODO
+        // inCorpus.addOption("Stem a input string", UNSUPPORTED); // TODO
 
         vocabularyFiltering = makeAlternativeQuestion("What parts of the vocabulary should be used?", goTo(inCorpus));
         vocabularyFiltering.addOption("The entire vocabulary");
-        vocabularyFiltering.addOption("Only those with the higher in TF-DF");
-        vocabularyFiltering.addOption("Only those with the higher in TF-IDF");
+        vocabularyFiltering.addOption("Only those with high TF×DF");
+        vocabularyFiltering.addOption("Only those with high TF÷DF");
+        vocabularyFiltering.addOption("Only those with high DF÷n");
 
         // inCorpus.addOption("", new Runnable() {
         // @Override
@@ -360,26 +437,34 @@ public class CLITest extends CLI {
     }
 
     public Set<Token> filterVocabulary() {
-        boolean highInTFDF = false;
+        TokenMetric metric = null;
         switch (vocabularyFiltering.ask()) {
+            case 0:
+                return null;
             case 1:
                 return currentCorpus.getVocabulary();
             case 2:
-                highInTFDF = true;
+                metric = currentCorpus.getMetricTFDF();
                 break;
             case 3:
-                highInTFDF = false;
+                metric = currentCorpus.getMetricTFIDF();
+                break;
+            case 4:
+                metric = currentCorpus.getMetricDFperN();
                 break;
         }
-        double lowerBound = makeOpenQuestion("What is the lower bound?", (String s) -> Double.parseDouble(s)).ask();
-        CorpusMeasure measure = highInTFDF ? currentCorpus.getTFDF() : currentCorpus.getTFIDF();
-        // double[] sortedMeasure = measure.getSorted();
+
+        Double L = makeOpenQuestion("What is the lower cut-off?", (String s) -> Double.parseDouble(s)).ask();
+        if (L == null)
+            return null;
+
         Set<Token> filtered = new HashSet<Token>();
         for (Token token : currentCorpus.getVocabulary()) {
-            if (measure.get(token).get(currentCorpus) > lowerBound) {
+            if (metric.measure(token) > L) {
                 filtered.add(token);
             }
         }
+
         return filtered;
     }
 }

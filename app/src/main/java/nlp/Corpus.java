@@ -25,6 +25,45 @@ public interface Corpus extends Set<Document>, Textual {
         return df;
     }
 
+    public default CorpusMeasure getTF() {
+        return getTF(getVocabulary());
+    }
+
+    public default CorpusMeasure getTF(Set<Token> vocab) {
+        final CorpusMeasure measure = new HashCorpusMeasure(this);
+        for (Token token : vocab) {
+            Term term = token.asTerm();
+            Map<Textual, Double> r = new HashMap<Textual, Double>();
+            measure.put(token, r);
+            double total = 0;
+            double count = 0;
+            for (Document document : this) {
+                double tf = document.getTermFrequency(term);
+                total += tf;
+                count++;
+                r.put(document, tf);
+            }
+            r.put(this, total / count);
+        }
+        return measure;
+    }
+
+    public default CorpusMeasure getDF() {
+        return getDF(getVocabulary());
+    }
+
+    public default CorpusMeasure getDF(Set<Token> vocab) {
+        final CorpusMeasure measure = new HashCorpusMeasure(this);
+        for (Token token : vocab) {
+            Term term = token.asTerm();
+            Map<Textual, Double> r = new HashMap<Textual, Double>();
+            measure.put(token, r);
+            double df = getDocumentFrequency(term);
+            r.put(this, df);
+        }
+        return measure;
+    }
+
     public default CorpusMeasure getTFIDF() {
         return getTFIDF(getVocabulary());
     }
@@ -47,6 +86,43 @@ public interface Corpus extends Set<Document>, Textual {
             r.put(this, total / count);
         }
         return measure;
+    }
+
+    public default TokenMetric getMetricTFDF() {
+        return new TokenMetric() {
+            @Override
+            public double measure(Token token) {
+                Term term = token.asTerm();
+                double tf = getTermFrequency(term);
+                double df = getDocumentFrequency(term);
+                return tf * df;
+            }
+        };
+    }
+
+    public default TokenMetric getMetricTFIDF() {
+        return new TokenMetric() {
+            @Override
+            public double measure(Token token) {
+                Term term = token.asTerm();
+                double tf = getTermFrequency(term);
+                double df = getDocumentFrequency(term);
+                return tf / df;
+            }
+        };
+    }
+
+    public default TokenMetric getMetricDFperN() {
+        return new TokenMetric() {
+            double n = size();
+
+            @Override
+            public double measure(Token token) {
+                Term term = token.asTerm();
+                double df = getDocumentFrequency(term);
+                return df / n;
+            }
+        };
     }
 
     public default CorpusMeasure getTFDF() {

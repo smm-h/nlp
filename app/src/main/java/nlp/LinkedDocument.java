@@ -25,6 +25,11 @@ public class LinkedDocument extends LinkedList<DocumentElement> implements Docum
     }
 
     @Override
+    public boolean isSourceURL() {
+        return false;
+    }
+
+    @Override
     public String getSource() {
         return "N/A";
     }

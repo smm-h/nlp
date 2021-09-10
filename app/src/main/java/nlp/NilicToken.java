@@ -16,6 +16,11 @@ public class NilicToken extends StringToken {
     }
 
     @Override
+    public String getType() {
+        return token.getTypeString();
+    }
+
+    @Override
     public String toString() {
         return "[" + token.data.toString() + "] [" + token.getTypeString() + "]";
     }

@@ -2,6 +2,8 @@ package nlp;
 
 public interface Token extends Comparable<Token> {
 
+    public String getType();
+
     public Term asTerm();
 
     public String getUnnormalized();

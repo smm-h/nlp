@@ -61,10 +61,18 @@ public class CLI {
         while (!stack.isEmpty()) {
             q = stack.pop();
             Runnable effect = q.getEffect(q.ask());
-            if (effect == null)
+            if (effect == null) {
                 laterAsk(q0);
-            else
-                effect.run();
+            } else {
+                if (effect == UNSUPPORTED) {
+                    laterAsk(q0);
+                }
+                try {
+                    effect.run();
+                } catch (Exception e) {
+                    print(e.getStackTrace());
+                }
+            }
         }
     }
 
@@ -209,6 +217,9 @@ public class CLI {
 
         @Override
         public void addOption(String option, Runnable effect) {
+            if (effect == UNSUPPORTED) {
+                option += " (Unsupported)";
+            }
             char symbol = 0;
             for (char c : option.toUpperCase().toCharArray()) {
                 if (isUppercaseAlphabetic(c)) {

@@ -16,7 +16,7 @@ public class HTMLUtilities {
     // "<span style=\"color:red;\">"+...+"</span>" TODO
 
     public static final DocumentElement DEFAULT_STYLE = new HTMLOnlyDocumentElement(
-            "<link rel=\"stylesheet\" href=\"C:\\Android\\sdk\\docs\\assets\\css\\default.css\">");
+            "<link rel=\"stylesheet\" href=\"C:\\Android\\sdk\\docs\\assets\\css\\default.css\">\n");
 
     // "<link
     // rel=\"stylesheet\"href=\"C:\\Gradle\\gradle-7.0\\docs\\dsl\\base.css\">""
@@ -29,6 +29,14 @@ public class HTMLUtilities {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public static String makeLink(String link) {
+        return makeLink(link, link);
+    }
+
+    public static String makeLink(String text, String link) {
+        return "<a href=\"" + link + "\">" + text + "</a>";
     }
 
     @SuppressWarnings("unchecked")
