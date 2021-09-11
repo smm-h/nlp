@@ -2,6 +2,8 @@ package web.html;
 
 import java.util.List;
 
+import util.ToString;
+
 public class TableMaker {
     private final int columns;
     private int rows;
@@ -80,5 +82,15 @@ public class TableMaker {
             add(rowMaker.make(thing));
 
         return finish();
+    }
+
+    public static <T> String makeManually(String header, Iterable<T> rows, ToString<T> rowMaker) {
+
+        StringBuilder builder = new StringBuilder(header);
+
+        for (T thing : rows)
+            builder.append(rowMaker.alternativeToString(thing));
+
+        return builder.toString();
     }
 }

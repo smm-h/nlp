@@ -10,9 +10,15 @@ import java.util.Objects;
 import java.util.Set;
 
 import jile.common.Common;
+import nlp.languages.English;
+import nlp.languages.Farsi;
+import nlp.languages.NaturalLanguage;
 import util.Tuple;
 
 public class Utilities {
+
+    public static final NaturalLanguage FARSI = new Farsi();
+    public static final NaturalLanguage ENGLISH = new English();
 
     public static Tokenizer DEFAULT_TOKENIZER;
 

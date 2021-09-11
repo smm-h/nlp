@@ -3,19 +3,60 @@ streak ' \t\r\n\f' as whitespace
 ignore whitespace
 
 // English characters
-streak '[A-Z][a-z]' as word
-streak '[0-9]' as digits
-streak '~!@#$%^&*()-_=+/|\<>[]:;.,"' as punctuation
+streak '[A-Z][a-z]' as en_word
+streak '[0-9]' as en_digits
+// streak '~!@#$%^&*()-_=+/|\<>[]{}:;.,"' as en_punctuation
 
 // apostrophe
 verbatim "'"
 
+verbatim '~'
+verbatim '!'
+verbatim '@'
+verbatim '#'
+verbatim '$'
+verbatim '%'
+verbatim '^'
+verbatim '&'
+verbatim '*'
+verbatim '('
+verbatim ')'
+verbatim '-'
+verbatim '_'
+verbatim '='
+verbatim '+'
+verbatim '/'
+verbatim '|'
+verbatim '\'
+verbatim '<'
+verbatim '>'
+verbatim '['
+verbatim ']'
+verbatim '{'
+verbatim '}'
+verbatim ':'
+verbatim ';'
+verbatim '.'
+verbatim ','
+verbatim '"'
+
 // Farsi characters
 // https://en.wikipedia.org/wiki/Persian_alphabet
-streak 'ءأئؤابپتثجچحخدذرزژسشصضطظعغفقکكگلمنوهیيـ' as fword
-streak '۰۱۲۳۴۵۶۷۸۹' as fdigits
-// streak '۰٠۱١۲٢۳٣۴٤۵٥۶٦۷٧۸٨۹٩' as fdigits
-streak '٪،٫٬٭؛»«-–' as fpunctuation
+streak 'ءأئؤابپتثجچحخدذرزژسشصضطظعغفقکكگلمنوهیيـ' as fa_word
+streak '۰۱۲۳۴۵۶۷۸۹' as fa_digits
+// streak '۰٠۱١۲٢۳٣۴٤۵٥۶٦۷٧۸٨۹٩' as fa_digits
+// streak '٪،٫٬٭؛»«-–' as fa_punctuation
+
+verbatim '٪'
+verbatim '،'
+verbatim '٫'
+verbatim '٬'
+verbatim '٭'
+verbatim '؛'
+verbatim '»'
+verbatim '«'
+verbatim '-'
+verbatim '–'
 
 // zwnj
 verbatim ''

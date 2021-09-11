@@ -21,7 +21,6 @@ import nlp.Term;
 import nlp.Token;
 import nlp.TokenMetric;
 import nlp.Utilities;
-import nlp.languages.Farsi;
 import nlp.languages.NaturalLanguage;
 import util.CLI;
 import util.ToString;
@@ -35,8 +34,7 @@ import web.wikipedia.RandomDocumentGenerator;
 
 // @SuppressWarnings("unused")
 public class CLITest extends CLI {
-
-    NaturalLanguage nl = new Farsi();
+    NaturalLanguage nl = Utilities.FARSI;
     Corpus currentCorpus;
     Document currentDocument;
     Lexicon lexicon;
@@ -73,7 +71,51 @@ public class CLITest extends CLI {
         inCorpus = makeAlternativeQuestion("You are inside a corpus:", goTo(start));
         inDocument = makeAlternativeQuestion("You are inside a document:", goTo(inCorpus));
 
-        // start.addOption("Open a corpus file from disk", UNSUPPORTED); // TODO
+        start.addOption("Choose language for document generation", new Runnable() {
+            @Override
+            public void run() {
+                AlternativeQuestion q = makeAlternativeQuestion("Choose a natural language:", goTo(start));
+                q.addOption("English");
+                q.addOption("Farsi");
+                switch (q.ask()) {
+                    case 1:
+                        nl = Utilities.ENGLISH;
+                        break;
+                    case 2:
+                        nl = Utilities.FARSI;
+                        break;
+                }
+                laterAsk(start);
+            }
+        });
+
+        start.addOption("Open the sample corpus from disk", new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    currentCorpus = SampleTokenizerTest.getCorpus();
+                    laterAsk(inCorpus);
+                } catch (IOException e) {
+                    print("Failed to read the sample corpus file(s).");
+                    laterAsk(start);
+                }
+            }
+        });
+
+        start.addOption("Open the document-per-line input corpus from disk", new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    currentCorpus = new HashCorpus();
+                    currentCorpus.add(
+                            Utilities.getDocumentFromPath(Path.of("C:/Users/SMM H/Desktop/nlp/res/input-corpus.txt")));
+                    laterAsk(inCorpus);
+                } catch (IOException e) {
+                    print("Failed to read the input corpus file.");
+                    laterAsk(start);
+                }
+            }
+        });
 
         start.addOption("Open the symbolic corpus file from disk", new Runnable() {
             @Override
@@ -86,6 +128,7 @@ public class CLITest extends CLI {
                     laterAsk(inCorpus);
                 } catch (IOException e) {
                     print("Failed to read the symbolic corpus file.");
+                    laterAsk(start);
                 }
             }
         });
@@ -119,8 +162,9 @@ public class CLITest extends CLI {
             @Override
             public String alternativeToString(Document document) {
                 StringBuilder sb = new StringBuilder();
+                sb.append("<tr><td>");
                 sb.append(document.toString());
-                sb.append(" (Source: ");
+                sb.append("</td><td>");
                 String src;
                 try {
                     src = URLDecoder.decode(document.getSource(), "UTF-8");
@@ -131,7 +175,7 @@ public class CLITest extends CLI {
                     src = HTMLUtilities.makeLink(src);
                 }
                 sb.append(src);
-                sb.append("): <pre>");
+                sb.append("</td><td><pre>");
                 int limit = 64;
                 String dt = document.toPlainText();
                 if (dt.length() > limit) {
@@ -140,7 +184,7 @@ public class CLITest extends CLI {
                 } else {
                     sb.append(dt);
                 }
-                sb.append("</pre>");
+                sb.append("</pre></td></tr>");
                 return sb.toString();
             }
         };
@@ -149,7 +193,8 @@ public class CLITest extends CLI {
             @Override
             public boolean beforeShowing() {
                 report.addHeading("Documents in the corpus", 1);
-                report.add(HTMLUtilities.toList(currentCorpus, false, ts_doc));
+                String header = "<tr><th>Document</th><th>Source</th><th>Excerpt</th></tr>";
+                report.addTag("table", TableMaker.makeManually(header, currentCorpus, ts_doc));
                 return true;
             }
 
@@ -177,6 +222,27 @@ public class CLITest extends CLI {
             }
         });
 
+        inDocument.addOption("Print source", new Runnable() {
+            @Override
+            public void run() {
+                print(currentDocument.getSource());
+                laterAsk(inDocument);
+            }
+        });
+
+        inDocument.addOption("Read the document", new HTMLReport("Reading a document") {
+            @Override
+            public boolean beforeShowing() {
+                report.addRawHTML(currentDocument.toHTML());
+                return true;
+            }
+
+            @Override
+            public void afterShowing() {
+                laterAsk(inDocument);
+            }
+        });
+
         // inCorpus.addOption("Add documents to corpus", UNSUPPORTED); // TODO
 
         inCorpus.addOption("Tokenize corpus", new HTMLReport("Tokenized") {
@@ -188,29 +254,6 @@ public class CLITest extends CLI {
                     report.addHeading(d.toString(), 2);
                     // report.addTag("pre", d.inspect(Inspector.INSPECTOR_TOKENS));
                     report.addTag("table", d.inspect(Inspector.INSPECTOR_TOKENS_TABLE));
-                }
-                return true;
-            }
-
-            @Override
-            public void afterShowing() {
-                laterAsk(inCorpus);
-            }
-        });
-
-        inCorpus.addOption("See the sources of the documents in the corpus", new HTMLReport("Sources") {
-            @Override
-            public boolean beforeShowing() {
-                report.addHeading("Sources", 1);
-                String src;
-                for (Document d : currentCorpus) {
-                    try {
-                        src = URLDecoder.decode(d.getSource(), "UTF-8");
-                    } catch (UnsupportedEncodingException e) {
-                        src = d.getSource();
-                    }
-                    report.addHeading(d.toString(), 2);
-                    report.addParagraph("Source: " + src);
                 }
                 return true;
             }
@@ -394,6 +437,7 @@ public class CLITest extends CLI {
             @Override
             public void run() {
                 print(currentCorpus.getTermFrequency(WHAT_TERM.ask()));
+                laterAsk(start);
             }
         });
 
@@ -401,6 +445,7 @@ public class CLITest extends CLI {
             @Override
             public void run() {
                 print(currentCorpus.getDocumentFrequency(WHAT_TERM.ask()));
+                laterAsk(start);
             }
         });
 
@@ -408,6 +453,7 @@ public class CLITest extends CLI {
             @Override
             public void run() {
                 print(LevenshteinDistance.lev(WHAT.ask(), WHAT.ask()));
+                laterAsk(start);
             }
         });
 
@@ -415,6 +461,7 @@ public class CLITest extends CLI {
             @Override
             public void run() {
                 print(Utilities.DEFAULT_NORMALIZER.normalize(WHAT.ask()));
+                laterAsk(start);
             }
         });
 

@@ -6,7 +6,7 @@ import nlp.HashCorpus;
 import nlp.Utilities;
 
 public class SampleTokenizerTest {
-    public static Corpus main(String[] args) throws IOException {
+    public static Corpus getCorpus() throws IOException {
         Corpus corpus = new HashCorpus();
         for (int i = 0; i < 20; i++) {
             Path path = Path.of("C:/Users/SMM H/Desktop/nlp/res/ctpr/tokenization-samples/sample" + i);

@@ -70,7 +70,8 @@ public class CLI {
                 try {
                     effect.run();
                 } catch (Exception e) {
-                    print(e.getStackTrace());
+                    e.printStackTrace();
+                    laterAsk(q0);
                 }
             }
         }
